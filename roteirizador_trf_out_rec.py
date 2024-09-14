@@ -2230,14 +2230,6 @@ with row2[0]:
 
     data_roteiro = container_roteirizar.date_input('Data do Roteiro', value=None, format='DD/MM/YYYY', key='data_roteiro')
 
-    # Captando qual o serviço da junção
-
-    if 'df_servico_voos_horarios' in st.session_state:
-
-        lista_servicos = st.session_state.df_servico_voos_horarios['Servico'].unique().tolist()
-
-        servico_roteiro = container_roteirizar.selectbox('Serviço', lista_servicos, index=None, placeholder='Escolha um Serviço', key='servico_roteiro')
-
     row_container = container_roteirizar.columns(2)
 
     # Botão roteirizar
@@ -2267,7 +2259,13 @@ if visualizar_voos:
 
     with row2[0]:
 
-        st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True)                                                  
+        st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True)   
+
+if 'df_servico_voos_horarios' in st.session_state:
+
+    lista_servicos = st.session_state.df_servico_voos_horarios['Servico'].unique().tolist()
+
+    servico_roteiro = container_roteirizar.selectbox('Serviço', lista_servicos, index=None, placeholder='Escolha um Serviço', key='servico_roteiro')
 
 # Formulário de Junção de Voos
 
