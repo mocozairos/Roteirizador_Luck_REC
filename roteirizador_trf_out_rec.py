@@ -2296,7 +2296,7 @@ with row2[1]:
                 df_voos_hi_hf = st.session_state.df_servico_voos_horarios\
                     [(st.session_state.df_servico_voos_horarios['Horario Voo']>=horario_inicial) & 
                      (st.session_state.df_servico_voos_horarios['Horario Voo']<=horario_final) & 
-                     (st.session_state.df_servico_voos_horarios['Voo']!='G3 - 0001') & 
+                     (st.session_state.df_servico_voos_horarios['Voo']!='RG - 3333') & 
                      (st.session_state.df_servico_voos_horarios['Servico']==servico)]\
                         [['Servico', 'Voo', 'Horario Voo']].reset_index(drop=True)
                 
@@ -2305,7 +2305,7 @@ with row2[1]:
                 df_voos_hi_hf = st.session_state.df_servico_voos_horarios\
                     [(st.session_state.df_servico_voos_horarios['Horario Voo']>=horario_inicial) & 
                      (st.session_state.df_servico_voos_horarios['Horario Voo']<=horario_final) & 
-                     (st.session_state.df_servico_voos_horarios['Voo']!='G3 - 0001') & 
+                     (st.session_state.df_servico_voos_horarios['Voo']!='RG - 3333') & 
                      ((st.session_state.df_servico_voos_horarios['Servico']==servico) | 
                       (st.session_state.df_servico_voos_horarios['Servico']=='OUT (SERRAMBI)'))]\
                         [['Servico', 'Voo', 'Horario Voo']].reset_index(drop=True)
