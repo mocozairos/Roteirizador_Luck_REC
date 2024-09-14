@@ -1663,12 +1663,6 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 if contador_hoteis>max_hoteis:
 
-                                    if voo=='AD - 2547':
-
-                                        st.write('Outro Hotel - max_hoteis')
-    
-                                        st.write(df_servicos.at[value, 'Est Origem'])
-
                                     carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
                                         abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
                                     
@@ -1680,12 +1674,6 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
                                     # pra, no final, eu saber quantos carros foram usados nesse roteiro e poder dividir 'igualmente' a quantidade de hoteis
 
                                     if paxs_total_roteiro+paxs_hotel>pax_max:
-
-                                        if voo=='AD - 2547':
-
-                                            st.write('Outro Hotel - paxs_total')
-        
-                                            st.write(df_servicos.at[value, 'Est Origem'])
 
                                         carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
                                             abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
@@ -1723,12 +1711,6 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
                                             contador_hoteis = 1
 
                                         else:
-
-                                            if voo=='AD - 2547':
-
-                                                st.write('Outro Hotel - definindo horario')
-            
-                                                st.write(df_servicos.at[value, 'Est Origem'])
 
                                             df_servicos.at[value, 'Data Horario Apresentacao']=data_horario_hotel
 
@@ -3918,11 +3900,7 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
         # Gerando horários de apresentação
 
-        st.write('Aqui')
-
         df_router_filtrado_2, roteiro = gerar_horarios_apresentacao(df_router_filtrado_2, roteiro, max_hoteis)
-
-        st.write('Aqui')
 
     else:
 
