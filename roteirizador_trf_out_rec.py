@@ -4,7 +4,6 @@ import decimal
 import pandas as pd
 import datetime
 from datetime import timedelta
-import xlwings as xw
 from itertools import combinations
 from google.oauth2 import service_account
 import gspread 
