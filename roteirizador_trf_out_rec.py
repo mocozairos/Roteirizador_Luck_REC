@@ -3864,8 +3864,6 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
         df_router_filtrado_2 = criar_df_servicos_2(df_router_filtrado, st.session_state.df_juncao_voos, df_hoteis_ref)
 
-        st.write('Aqui')
-
         roteiro = 0
 
         # Criando dataframe que vai receber os hoteis que tem mais paxs que a capacidade máxima da frota
@@ -3878,6 +3876,8 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
         df_router_filtrado_2, df_hoteis_pax_max, roteiro = \
             roteirizar_hoteis_mais_pax_max(df_router_filtrado_2, roteiro, df_hoteis_pax_max)
+
+        st.write('Aqui')
 
         df_juncoes_pax_max = pd.DataFrame()
 
