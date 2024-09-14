@@ -1538,12 +1538,6 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 df_servicos.at[value, 'Data Horario Apresentacao'] = \
                                     definir_horario_primeiro_hotel(df_servicos, value)
-
-                                # Aqui
-
-                                if servico=='OUT (SERRAMBI)':
-
-                                    st.write('Aqui')
                                 
                                 data_horario_primeiro_hotel = df_servicos.at[value, 'Data Horario Apresentacao']
                                 
@@ -1636,6 +1630,12 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 df_servicos.at[value, 'Data Horario Apresentacao'] = \
                                     definir_horario_primeiro_hotel(df_servicos, value)
+
+                                # Aqui
+
+                                if servico=='OUT (SERRAMBI)':
+
+                                    st.write('Aqui')
                                 
                                 data_horario_primeiro_hotel = df_servicos.at[value, 'Data Horario Apresentacao']
                                 
