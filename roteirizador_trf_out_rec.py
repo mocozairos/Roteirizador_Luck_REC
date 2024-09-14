@@ -1541,7 +1541,7 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 # Aqui
 
-                                if servico=='OUT(SERRAMBI)':
+                                if servico=='OUT (SERRAMBI)':
 
                                     st.write('Aqui')
                                 
