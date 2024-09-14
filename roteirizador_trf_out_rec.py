@@ -1502,10 +1502,6 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
             voo = df_servicos.at[index, 'Voo']
 
-            # Aqui
-
-            servico = df_servicos.at[index, 'Servico']
-
             # Se o voo não estiver em alguma junção
 
             if pd.isna(juntar):
@@ -1631,9 +1627,7 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
                                 df_servicos.at[value, 'Data Horario Apresentacao'] = \
                                     definir_horario_primeiro_hotel(df_servicos, value)
 
-                                # Aqui
-
-                                if servico=='OUT (SERRAMBI)':
+                                if voo=='AD - 2547':
 
                                     st.write('Aqui')
                                 
