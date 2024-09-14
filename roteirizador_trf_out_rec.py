@@ -1624,12 +1624,6 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                             if value==index_inicial:
 
-                                if voo=='AD - 2547':
-
-                                    st.write('Primeiro Hotel')
-
-                                    st.write(df_servicos.at[value, 'Est Origem'])
-
                                 df_servicos.at[value, 'Data Horario Apresentacao'] = \
                                     definir_horario_primeiro_hotel(df_servicos, value)
                                 
@@ -1657,12 +1651,6 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                             else:
 
-                                if voo=='AD - 2547':
-
-                                    st.write('Outro Hotel')
-
-                                    st.write(df_servicos.at[value, 'Est Origem'])
-
                                 # Colhe a quantidade de paxs do hotel anterior, o bairro do hotel atual, a quantidade de paxs do hotel atual 
                                 # e verifica se estoura a capacidade máxima de um carro
 
@@ -1675,6 +1663,12 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 if contador_hoteis>max_hoteis:
 
+                                    if voo=='AD - 2547':
+
+                                        st.write('Outro Hotel - max_hoteis')
+    
+                                        st.write(df_servicos.at[value, 'Est Origem'])
+
                                     carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
                                         abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
                                     
@@ -1686,6 +1680,12 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
                                     # pra, no final, eu saber quantos carros foram usados nesse roteiro e poder dividir 'igualmente' a quantidade de hoteis
 
                                     if paxs_total_roteiro+paxs_hotel>pax_max:
+
+                                        if voo=='AD - 2547':
+
+                                            st.write('Outro Hotel - paxs_total')
+        
+                                            st.write(df_servicos.at[value, 'Est Origem'])
 
                                         carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
                                             abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
@@ -1710,6 +1710,12 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                         if  data_horario_primeiro_hotel - data_horario_hotel>intervalo_pu_hotel:
 
+                                            if voo=='AD - 2547':
+
+                                                st.write('Outro Hotel - intervalo_pu')
+            
+                                                st.write(df_servicos.at[value, 'Est Origem'])
+
                                             carros, df_servicos, data_horario_primeiro_hotel, bairro, 
                                             paxs_total_roteiro = abrir_novo_carro(carros, df_servicos, value, index, 
                                                                                     paxs_hotel)
@@ -1717,6 +1723,12 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
                                             contador_hoteis = 1
 
                                         else:
+
+                                            if voo=='AD - 2547':
+
+                                                st.write('Outro Hotel - definindo horario')
+            
+                                                st.write(df_servicos.at[value, 'Est Origem'])
 
                                             df_servicos.at[value, 'Data Horario Apresentacao']=data_horario_hotel
 
