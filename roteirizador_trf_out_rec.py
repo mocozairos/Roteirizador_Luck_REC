@@ -7,21 +7,6 @@ from datetime import timedelta
 import xlwings as xw
 from itertools import combinations
 
-# Desenvolver automação de resumo de escala do dia e da noite
-# Desenvolver automação de inserção de telefone de cliente no phoenix (preciso desenvolver a automação p/ inserção de infos no phoenix pra Thiago)
-# Envio automático de informativo de saída e de passeio
-# Desenvolver view com todas as reservas e seus respectivos serviços (p/ automação de informativo)
-# Automação de confirmação de horários de voo
-# Mapa de Pagamento de Guias Recife
-# Relatório de vendas líquidas de reembolso
-# Desenvolver tela na analise de campanha de motoristas pra o agrupamento também ser por veículo, ao invés de ser só por motorista + Comparativo de motoristas 
-# de uma mesma categoria de veículos
-# Pensar em automações pra o setor de reservas. Os cadastros dos serviços são MUITO trabalhosos
-# Criar automação de alterar datas de vencimentos do contas a receber p/ Carol Luck Recife
-# Mandar todas as sequências de hoteis de cada base p/ o pessoal preencher
-# Análises p/ decisão de compra de novos carros
-# Relatório de veículos parados vs veículos locados para um período
-
 def gerar_df_phoenix(vw_name):
     # Parametros de Login AWS
     config = {
