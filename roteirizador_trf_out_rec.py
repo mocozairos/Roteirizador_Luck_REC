@@ -3956,6 +3956,8 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
+    st.session_state.max_hoteis = max_hoteis
+
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3966,6 +3968,18 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
 if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternativos)>0 and \
     servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
+
+    # Aqui
+
+    for roteiro_alternativo in st.session_state.df_roteiros_alternativos['Roteiro'].unique().tolist():
+
+        n_hoteis = len(st.session_state.df_roteiros_alternativos[st.session_state.df_roteiros_alternativos['Roteiro']==
+                       roteiro_alternativo]['Est Origem'].unique().tolist())
+
+        if n_hoteis%st.session_state.max_hoteis==0:
+        
+            st.session_state.df_roteiros_alternativos = st.session_state.df_roteiros_alternativos\
+            [st.session_state.df_roteiros_alternativos['Roteiro']!=roteiro_alternativo].reset_index(drop=True)
 
     st.divider()
 
