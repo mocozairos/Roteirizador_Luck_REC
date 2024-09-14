@@ -3877,8 +3877,6 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
         df_router_filtrado_2, df_hoteis_pax_max, roteiro = \
             roteirizar_hoteis_mais_pax_max(df_router_filtrado_2, roteiro, df_hoteis_pax_max)
 
-        st.write('Aqui')
-
         df_juncoes_pax_max = pd.DataFrame()
 
         df_voos_pax_max = pd.DataFrame()
@@ -3897,6 +3895,8 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
         # Gerando horários de apresentação
 
         df_router_filtrado_2, roteiro = gerar_horarios_apresentacao(df_router_filtrado_2, roteiro, max_hoteis)
+
+        st.write('Aqui')
 
     else:
 
