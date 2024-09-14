@@ -1698,6 +1698,12 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                         if  data_horario_primeiro_hotel - data_horario_hotel>intervalo_pu_hotel:
 
+                                            if voo=='AD - 2547':
+
+                                                st.write('Outro Hotel - intervalo_pu')
+            
+                                                st.write(df_servicos.at[value, 'Est Origem'])
+
                                             carros, df_servicos, data_horario_primeiro_hotel, bairro, 
                                             paxs_total_roteiro = abrir_novo_carro(carros, df_servicos, value, index, 
                                                                                     paxs_hotel)
