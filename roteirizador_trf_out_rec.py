@@ -73,23 +73,24 @@ def inserir_hoteis_faltantes(itens_faltantes, df_hoteis, aba_excel, regiao):
 
     st.dataframe(df_itens_faltantes, hide_index=True)
 
-    df_itens_faltantes['Sequência']=''
-
-    df_itens_faltantes['Apoio']=''
+    df_itens_faltantes[['Região', 'Sequência', 'Bus', 'Micro', 'Van']]=''
 
     df_hoteis_geral = pd.concat([df_hoteis, df_itens_faltantes])
 
-    wb = xw.Book('Hoteis.xlsx')
+    nome_credencial = st.secrets["CREDENCIAL_SHEETS"]
+    credentials = service_account.Credentials.from_service_account_info(nome_credencial)
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    credentials = credentials.with_scopes(scope)
+    client = gspread.authorize(credentials)
+    
+    spreadsheet = client.open_by_key('1az0u1yGWqIXE9KcUro6VznsVj7d5fozhH3dDsT1eI6A')
 
-    sheet = wb.sheets[aba_excel]
-
-    sheet.range('A2:Z100000').clear_contents()
-
-    sheet.range('A2').options(index=False).value = df_hoteis_geral.values
-
-    wb.save()
-
-    wb.close()
+    sheet = spreadsheet.worksheet(aba_excel)
+    sheet_data = sheet.get_all_values()
+    limpar_colunas = "A:D"
+    sheet.batch_clear([limpar_colunas])
+    data = [df_hoteis_geral.columns.values.tolist()] + df_hoteis_geral.values.tolist()
+    sheet.update("A1", data)
 
     st.error(f'Os hoteis acima não estão cadastrados na lista de sequência de hoteis. Eles foram inseridos no final da lista de {regiao}. Por favor, coloque-os na sequência e tente novamente')
 
