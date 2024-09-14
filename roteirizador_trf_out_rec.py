@@ -4114,7 +4114,7 @@ elif 'nome_html_bv' in st.session_state and \
                 
             else:
 
-                df_roteiros_alternativos = st.session_state.df_roteiros_alternativos_bv
+                df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_bv.columns.tolist())
 
             if len(df_hoteis_pax_max)>0:
 
@@ -4241,7 +4241,7 @@ elif 'nome_html_bv' in st.session_state and \
                 
             else:
 
-                df_roteiros_alternativos = st.session_state.df_roteiros_alternativos_pd
+                df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_pd.columns.tolist())
 
             if len(df_hoteis_pax_max)>0:
 
