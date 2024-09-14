@@ -3906,6 +3906,10 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
         st.stop()
 
+    # Aqui
+
+    df_router_filtrado_2
+
     # Gerando roteiros alternativos
 
     df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
