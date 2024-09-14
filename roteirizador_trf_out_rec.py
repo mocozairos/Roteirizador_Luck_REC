@@ -6,6 +6,9 @@ import datetime
 from datetime import timedelta
 import xlwings as xw
 from itertools import combinations
+from google.oauth2 import service_account
+import gspread 
+import webbrowser
 
 def gerar_df_phoenix(vw_name):
     # Parametros de Login AWS
