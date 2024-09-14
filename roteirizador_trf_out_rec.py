@@ -2175,7 +2175,7 @@ with row1[1]:
 
 with row1[2]:
 
-    intervalo_inicial_mcz = objeto_intervalo('Horário Primeiro Hotel | Alagoas ou Maceió', datetime.time(7, 40), 
+    intervalo_inicial_mcz = objeto_intervalo('Horário Primeiro Hotel | Alagoas ou Maceió', datetime.time(7, 0), 
                                              'intervalo_inicial_mcz')
 
     intervalo_pu_hotel = objeto_intervalo('Intervalo Hoteis | Primeiro vs Último', datetime.time(0, 40), 'intervalo_pu_hotel')
