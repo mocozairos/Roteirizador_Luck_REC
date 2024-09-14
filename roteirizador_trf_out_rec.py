@@ -1719,10 +1719,14 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
             else:
 
-                servico = df_servicos.at[index, 'Servico']
+                # servico = df_servicos.at[index, 'Servico']
 
-                df_ref = df_servicos[(df_servicos['Modo do Servico']=='REGULAR') & (df_servicos['Junção']==juntar) & 
-                                        (df_servicos['Servico']==servico)].reset_index()
+                # df_ref = df_servicos[(df_servicos['Modo do Servico']=='REGULAR') & (df_servicos['Junção']==juntar) & 
+                #                         (df_servicos['Servico']==servico)].reset_index()
+
+                # Aqui
+
+                df_ref = df_servicos[(df_servicos['Modo do Servico']=='REGULAR') & (df_servicos['Junção']==juntar)].reset_index()
 
                 index_inicial = df_ref['index'].min()
 
@@ -3905,12 +3909,6 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
         inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Porto', 'Porto de Galinhas')
 
         st.stop()
-
-    # Aqui
-
-    st.dataframe(df_router_filtrado_2)
-
-    st.write('Aqui') 
 
     # Gerando roteiros alternativos
 
