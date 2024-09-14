@@ -2739,7 +2739,7 @@ elif roteirizar and servico_roteiro=='OUT (MILAGRES)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Milagres', 'Milagres')
 
         st.stop()
 
@@ -2857,7 +2857,7 @@ elif roteirizar and servico_roteiro=='OUT (MACEIÓ-AL)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Maceio', 'Maceio')
 
         st.stop()
 
@@ -2975,7 +2975,7 @@ elif roteirizar and servico_roteiro=='OUT (ALAGOAS)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Alagoas', 'Alagoas')
 
         st.stop()
 
@@ -3093,7 +3093,7 @@ elif roteirizar and servico_roteiro=='OUT RECIFE (CENTRO)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Recife Centro', 'Recife Centro')
 
         st.stop()
 
@@ -3211,7 +3211,7 @@ elif roteirizar and servico_roteiro=='OUT (JOÃO PESSOA-PB)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Joao Pessoa', 'João Pessoa')
 
         st.stop()
 
@@ -3329,7 +3329,7 @@ elif roteirizar and servico_roteiro=='OUT (CARNEIROS I TAMANDARÉ)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Carneiros', 'Carneiros')
 
         st.stop()
 
@@ -3447,7 +3447,7 @@ elif roteirizar and servico_roteiro=='OUT (FAZENDA NOVA)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Fazenda Nova', 'Fazenda Nova')
 
         st.stop()
 
@@ -3565,7 +3565,7 @@ elif roteirizar and servico_roteiro=='OUT (OLINDA)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Olinda', 'Olinda')
 
         st.stop()
 
@@ -3683,7 +3683,7 @@ elif roteirizar and servico_roteiro=='OUT (MARAGOGI | JAPARATINGA)':
 
     else:
 
-        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Cabo', 'Cabo de Sto. Agostinho')
+        inserir_hoteis_faltantes(itens_faltantes, df_hoteis_ref, 'Hoteis Maragogi', 'Maragogi')
 
         st.stop()
 
