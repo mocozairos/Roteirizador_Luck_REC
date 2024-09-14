@@ -548,7 +548,7 @@ def preencher_roteiro_carros(df_servicos, roteiro, carros, value):
 
     return df_servicos
 
-def abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel):
+def abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel):
 
     carros+=1
 
@@ -566,7 +566,7 @@ def abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel):
 
     df_servicos.at[value, 'Carros'] = carros
 
-    return carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro
+    return carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro
 
 def plotar_roteiros_simples(df_servicos, row3, coluna):
 
@@ -1570,8 +1570,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 if paxs_total_roteiro+paxs_hotel>pax_max:
 
-                                    carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                        abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                    carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                        abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
 
                                 # Se não estourar a capacidade máxima
 
@@ -1591,8 +1591,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                     if  data_horario_primeiro_hotel - data_horario_hotel>intervalo_pu_hotel:
 
-                                        carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                            abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                        carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                            abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
 
                                     else:
 
@@ -1663,8 +1663,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 if contador_hoteis>max_hoteis:
 
-                                    carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                        abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                    carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                        abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
                                     
                                     contador_hoteis = 1
                                     
@@ -1675,8 +1675,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                     if paxs_total_roteiro+paxs_hotel>pax_max:
 
-                                        carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                            abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                        carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                            abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
                                         
                                         contador_hoteis = 1
 
@@ -1698,8 +1698,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                         if  data_horario_primeiro_hotel - data_horario_hotel>intervalo_pu_hotel:
 
-                                            carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                            abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                            carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                            abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
                                             
                                             contador_hoteis = 1
 
@@ -1781,8 +1781,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 if paxs_total_roteiro+paxs_hotel>pax_max:
 
-                                    carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                        abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                    carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                        abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
 
                                 # Se não estourar a capacidade máxima
 
@@ -1802,8 +1802,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                     if  data_horario_primeiro_hotel - data_horario_hotel>intervalo_pu_hotel:
 
-                                        carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                            abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                        carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                            abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
 
                                     else:
 
@@ -1870,8 +1870,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                 if contador_hoteis>max_hoteis:
 
-                                    carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                        abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                    carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                        abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
                                     
                                     contador_hoteis = 1
                                     
@@ -1882,8 +1882,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                     if paxs_total_roteiro+paxs_hotel>pax_max:
 
-                                        carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                            abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                        carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                            abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
                                         
                                         contador_hoteis = 1
 
@@ -1905,8 +1905,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                                         if  data_horario_primeiro_hotel - data_horario_hotel>intervalo_pu_hotel:
 
-                                            carros, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
-                                            abrir_novo_carro(carros, df_servicos, value, index, paxs_hotel)
+                                            carros, roteiro, df_servicos, data_horario_primeiro_hotel, bairro, paxs_total_roteiro = \
+                                            abrir_novo_carro(carros, roteiro, df_servicos, value, index, paxs_hotel)
                                             
                                             contador_hoteis = 1
 
