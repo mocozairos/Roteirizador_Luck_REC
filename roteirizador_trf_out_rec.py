@@ -1624,7 +1624,7 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                             if value==index_inicial:
 
-                                if voo='AD - 2547':
+                                if voo=='AD - 2547':
 
                                     st.write('Primeiro Hotel')
 
@@ -1657,7 +1657,7 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
                             else:
 
-                                if voo='AD - 2547':
+                                if voo=='AD - 2547':
 
                                     st.write('Outro Hotel')
 
