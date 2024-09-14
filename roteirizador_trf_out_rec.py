@@ -1461,11 +1461,6 @@ def criar_df_servicos_2(df_servicos, df_juncao_voos, df_hoteis):
 
     # Ordenando dataframe por ['Modo do Servico', 'Servico', 'Junção', 'Voo', 'Sequência']
 
-    # Aqui
-
-    # df_servicos_2 = df_servicos_2.sort_values(by=['Modo do Servico', 'Servico', 'Junção', 'Voo', 'Sequência'], 
-    #                                           ascending=[True, True, True, True, False]).reset_index(drop=True)
-
     df_servicos_2 = df_servicos_2.sort_values(by=['Modo do Servico', 'Junção', 'Voo', 'Sequência'], 
                                               ascending=[True, True, True, False]).reset_index(drop=True)
 
@@ -1718,13 +1713,6 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
             # Se o voo estiver em alguma junção
 
             else:
-
-                # servico = df_servicos.at[index, 'Servico']
-
-                # df_ref = df_servicos[(df_servicos['Modo do Servico']=='REGULAR') & (df_servicos['Junção']==juntar) & 
-                #                         (df_servicos['Servico']==servico)].reset_index()
-
-                # Aqui
 
                 df_ref = df_servicos[(df_servicos['Modo do Servico']=='REGULAR') & (df_servicos['Junção']==juntar)].reset_index()
 
@@ -2603,6 +2591,8 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
     st.session_state.df_roteiros_apoios_alternativos_pd = df_roteiros_apoios_alternativos_pd
 
+    st.session_state.max_hoteis = max_hoteis
+
     # Plotando roteiros de cada carro se não houver rotas alternativas
 
     if len(df_roteiros_alternativos_bv)==0 and len(df_roteiros_alternativos_pd)==0:
@@ -2795,6 +2785,8 @@ elif roteirizar and servico_roteiro=='OUT (MILAGRES)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
+    st.session_state.max_hoteis = max_hoteis
+
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -2910,6 +2902,8 @@ elif roteirizar and servico_roteiro=='OUT (MACEIÓ-AL)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
+
+    st.session_state.max_hoteis = max_hoteis
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3027,6 +3021,8 @@ elif roteirizar and servico_roteiro=='OUT (ALAGOAS)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
+    st.session_state.max_hoteis = max_hoteis
+
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3142,6 +3138,8 @@ elif roteirizar and servico_roteiro=='OUT RECIFE (CENTRO)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
+
+    st.session_state.max_hoteis = max_hoteis
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3259,6 +3257,8 @@ elif roteirizar and servico_roteiro=='OUT (JOÃO PESSOA-PB)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
+    st.session_state.max_hoteis = max_hoteis
+
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3374,6 +3374,8 @@ elif roteirizar and servico_roteiro=='OUT (CARNEIROS I TAMANDARÉ)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
+
+    st.session_state.max_hoteis = max_hoteis
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3491,6 +3493,8 @@ elif roteirizar and servico_roteiro=='OUT (FAZENDA NOVA)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
+    st.session_state.max_hoteis = max_hoteis
+
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3606,6 +3610,8 @@ elif roteirizar and servico_roteiro=='OUT (OLINDA)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
+
+    st.session_state.max_hoteis = max_hoteis
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3723,6 +3729,8 @@ elif roteirizar and servico_roteiro=='OUT (MARAGOGI | JAPARATINGA)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
+    st.session_state.max_hoteis = max_hoteis
+
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3838,6 +3846,8 @@ elif roteirizar and servico_roteiro=='OUT (CABO DE STO AGOSTINHO)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
+
+    st.session_state.max_hoteis = max_hoteis
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3969,8 +3979,6 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternativos)>0 and \
     servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
 
-    # Aqui
-
     for roteiro_alternativo in st.session_state.df_roteiros_alternativos['Roteiro'].unique().tolist():
 
         n_hoteis = len(st.session_state.df_roteiros_alternativos[st.session_state.df_roteiros_alternativos['Roteiro']==
@@ -4072,6 +4080,26 @@ elif 'nome_html_bv' in st.session_state and \
     row3 = st.columns(3)
 
     coluna = 0
+
+    for roteiro_alternativo in st.session_state.df_roteiros_alternativos_bv['Roteiro'].unique().tolist():
+
+        n_hoteis = len(st.session_state.df_roteiros_alternativos_bv[st.session_state.df_roteiros_alternativos_bv['Roteiro']==
+                       roteiro_alternativo]['Est Origem'].unique().tolist())
+
+        if n_hoteis%st.session_state.max_hoteis==0:
+        
+            st.session_state.df_roteiros_alternativos_bv = st.session_state.df_roteiros_alternativos_bv\
+            [st.session_state.df_roteiros_alternativos_bv['Roteiro']!=roteiro_alternativo].reset_index(drop=True)
+
+    for roteiro_alternativo in st.session_state.df_roteiros_alternativos_pd['Roteiro'].unique().tolist():
+
+        n_hoteis = len(st.session_state.df_roteiros_alternativos_pd[st.session_state.df_roteiros_alternativos_pd['Roteiro']==
+                       roteiro_alternativo]['Est Origem'].unique().tolist())
+
+        if n_hoteis%st.session_state.max_hoteis==0:
+        
+            st.session_state.df_roteiros_alternativos_pd = st.session_state.df_roteiros_alternativos_pd\
+            [st.session_state.df_roteiros_alternativos_pd['Roteiro']!=roteiro_alternativo].reset_index(drop=True)
 
     with row_rotas_alternativas[0]:
 
