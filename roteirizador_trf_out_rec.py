@@ -3987,6 +3987,8 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
         rotas_alternativas = st.multiselect('Selecione as Rotas Alternativas que serão usadas', 
                                             st.session_state.df_roteiros_alternativos['Roteiro'].unique().tolist())
+
+        st.write(rotas_alternativas)
     
         gerar_roteiro_final = st.button('Gerar Roteiro Final')
 
