@@ -3987,8 +3987,6 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
         rotas_alternativas = st.multiselect('Selecione as Rotas Alternativas que serão usadas', 
                                             st.session_state.df_roteiros_alternativos['Roteiro'].unique().tolist())
-
-        st.write(rotas_alternativas)
     
         gerar_roteiro_final = st.button('Gerar Roteiro Final')
 
@@ -4012,14 +4010,14 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
         df_roteiros_apoios_alternativos = st.session_state.df_roteiros_apoios_alternativos
 
-        if rotas_alternativas:
+        if len(rotas_alternativas)>0:
 
             df_roteiros_alternativos = st.session_state.df_roteiros_alternativos\
                 [st.session_state.df_roteiros_alternativos['Roteiro'].isin(rotas_alternativas)].reset_index(drop=True)
             
         else:
 
-            df_roteiros_alternativos = st.session_state.df_roteiros_alternativos
+            df_roteiros_alternativos = pd.Dataframe(columns=st.session_state.df_roteiros_alternativos.columns.tolist())
 
         if len(df_hoteis_pax_max)>0:
 
