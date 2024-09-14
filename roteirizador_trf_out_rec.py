@@ -3731,7 +3731,7 @@ elif roteirizar and servico_roteiro=='OUT (MARAGOGI | JAPARATINGA)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
-    st.session_state.servico_roteiro = servico_roteiro
+    st.session_state['servico_roteiro'] = servico_roteiro
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
