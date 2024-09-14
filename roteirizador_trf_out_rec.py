@@ -1461,7 +1461,12 @@ def criar_df_servicos_2(df_servicos, df_juncao_voos, df_hoteis):
 
     # Ordenando dataframe por ['Modo do Servico', 'Servico', 'Junção', 'Voo', 'Sequência']
 
-    df_servicos_2 = df_servicos_2.sort_values(by=['Modo do Servico', 'Servico', 'Junção', 'Voo', 'Sequência'], 
+    # Aqui
+
+    # df_servicos_2 = df_servicos_2.sort_values(by=['Modo do Servico', 'Servico', 'Junção', 'Voo', 'Sequência'], 
+    #                                           ascending=[True, True, True, True, False]).reset_index(drop=True)
+
+    df_servicos_2 = df_servicos_2.sort_values(by=['Modo do Servico', 'Junção', 'Voo', 'Sequência'], 
                                               ascending=[True, True, True, True, False]).reset_index(drop=True)
 
     # Ordenando cada junção pela sequência de hoteis
