@@ -4014,6 +4014,10 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
             df_roteiros_alternativos = st.session_state.df_roteiros_alternativos\
                 [st.session_state.df_roteiros_alternativos['Roteiro'].isin(rotas_alternativas)].reset_index(drop=True)
+
+            df_router_filtrado_2 = st.session_state.df_router_filtrado_2\
+            [~st.session_state.df_router_filtrado_2['Roteiro'].isin(rotas_alternativas)].reset_index(drop=True)
+            
             
         else:
 
