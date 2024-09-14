@@ -3894,6 +3894,8 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
         # Gerando horários de apresentação
 
+        st.write('Aqui')
+
         df_router_filtrado_2, roteiro = gerar_horarios_apresentacao(df_router_filtrado_2, roteiro, max_hoteis)
 
         st.write('Aqui')
