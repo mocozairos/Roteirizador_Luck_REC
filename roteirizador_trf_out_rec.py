@@ -56,37 +56,6 @@ def objeto_intervalo(titulo, valor_padrao, chave):
 
     return intervalo_ref
 
-def puxar_sequencias_hoteis():
-
-    df_boa_viagem = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Boa Viagem')
-
-    df_piedade = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Piedade')
-
-    df_porto = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Porto')
-
-    df_cabo = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Cabo')
-
-    df_maragogi = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Maragogi')
-
-    df_olinda = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Olinda')
-
-    df_fazenda_nova = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Fazenda Nova')
-
-    df_carneiros = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Carneiros')
-
-    df_joao_pessoa = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Joao Pessoa')
-
-    df_recife_centro = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Recife Centro')
-
-    df_alagoas = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Alagoas')
-
-    df_maceio = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Maceio')
-
-    df_milagres = pd.read_excel('Hoteis.xlsx', sheet_name='Hoteis Milagres')
-
-    return df_boa_viagem, df_piedade, df_porto, df_cabo, df_maragogi, df_olinda, df_fazenda_nova, df_carneiros, df_joao_pessoa, \
-        df_recife_centro, df_alagoas, df_maceio, df_milagres
-
 def gerar_itens_faltantes(df_servicos, df_hoteis):
 
     lista_hoteis_df_router = df_servicos['Est Origem'].unique().tolist()
@@ -2086,6 +2055,37 @@ def verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, ro
             mime="text/html"
         )
 
+def puxar_sequencias_hoteis():
+
+    nome_credencial = st.secrets["CREDENCIAL_SHEETS"]
+    credentials = service_account.Credentials.from_service_account_info(nome_credencial)
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    credentials = credentials.with_scopes(scope)
+    client = gspread.authorize(credentials)
+
+    # Abrir a planilha desejada pelo seu ID
+    spreadsheet = client.open_by_key('1az0u1yGWqIXE9KcUro6VznsVj7d5fozhH3dDsT1eI6A')
+
+    lista_abas = ['Hoteis Porto', 'Hoteis Boa Viagem', 'Hoteis Piedade', 'Hoteis Cabo', 'Hoteis Maragogi', 'Hoteis Olinda', 
+                  'Hoteis Fazenda Nova', 'Hoteis Carneiros', 'Hoteis Joao Pessoa', 'Hoteis Recife Centro', 'Hoteis Alagoas', 
+                  'Hoteis Maceio', 'Hoteis Milagres']
+
+    lista_df_hoteis = ['df_hoteis_porto', 'df_hoteis_boa_viagem', 'df_hoteis_piedade', 'df_hoteis_cabo', 'df_hoteis_maragogi', 
+                       'df_hoteis_olinda', 'df_hoteis_fazenda_nova', 'df_hoteis_carneiros', 'df_hoteis_joao_pessoa', 
+                       'df_hoteis_recife_centro', 'df_hoteis_alagoas', 'df_hoteis_maceio', 'df_hoteis_milagres']
+
+    for index in range(len(lista_abas)):
+
+        aba = lista_abas[index]
+
+        df_hotel = lista_df_hoteis[index]
+        
+        sheet = spreadsheet.worksheet(aba)
+
+        sheet_data = sheet.get_all_values()
+
+        st.session_state[df_hotel] = pd.DataFrame(sheet_data[1:], columns=sheet_data[0])
+
 st.set_page_config(layout='wide')
 
 st.title('Roteirizador de Transfer Out - Recife')
@@ -2135,11 +2135,7 @@ if not 'df_router' in st.session_state:
 
 if not 'df_hoteis_boa_viagem' in st.session_state:
 
-    st.session_state.df_hoteis_boa_viagem, st.session_state.df_hoteis_piedade, \
-    st.session_state.df_hoteis_porto, st.session_state.df_hoteis_cabo, st.session_state.df_hoteis_maragogi, \
-    st.session_state.df_hoteis_olinda, st.session_state.df_hoteis_fazenda_nova, st.session_state.df_hoteis_carneiros, \
-    st.session_state.df_hoteis_joao_pessoa, st.session_state.df_hoteis_recife_centro, st.session_state.df_hoteis_alagoas, \
-    st.session_state.df_hoteis_maceio, st.session_state.df_hoteis_milagres = puxar_sequencias_hoteis()
+    puxar_sequencias_hoteis()
 
 row1 = st.columns(3)
 
@@ -2216,11 +2212,7 @@ with row2[0]:
 
         if atualizar_hoteis:
 
-            st.session_state.df_hoteis_boa_viagem, st.session_state.df_hoteis_piedade, \
-            st.session_state.df_hoteis_porto, st.session_state.df_hoteis_cabo, st.session_state.df_hoteis_maragogi, \
-            st.session_state.df_hoteis_olinda, st.session_state.df_hoteis_fazenda_nova, st.session_state.df_hoteis_carneiros, \
-            st.session_state.df_hoteis_joao_pessoa, st.session_state.df_hoteis_recife_centro, st.session_state.df_hoteis_alagoas, \
-            st.session_state.df_hoteis_maceio, st.session_state.df_hoteis_milagres = puxar_sequencias_hoteis()
+            puxar_sequencias_hoteis()
 
     # Botão Atualizar Dados Phoenix
 
