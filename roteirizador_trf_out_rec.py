@@ -4017,7 +4017,7 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
             
         else:
 
-            df_roteiros_alternativos = pd.Dataframe(columns=st.session_state.df_roteiros_alternativos.columns.tolist())
+            df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos.columns.tolist())
 
         if len(df_hoteis_pax_max)>0:
 
