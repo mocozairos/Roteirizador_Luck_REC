@@ -2250,7 +2250,8 @@ if visualizar_voos:
 
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') & 
-                                                    (st.session_state.df_router['Status do Servico']!='CANCELADO')].reset_index(drop=True)
+                                                    (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (st.session_state.df_router['Voo']!='RG - 3333')].reset_index(drop=True)
     
     st.session_state.df_servico_voos_horarios = df_router_filtrado[['Servico', 'Voo', 'Horario Voo']].sort_values(by=['Servico', 'Horario Voo'])\
         .drop_duplicates().reset_index(drop=True)
