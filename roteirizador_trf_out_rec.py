@@ -2367,7 +2367,8 @@ with row2[2]:
 
     if limpar_juncao_esp and juncao_limpar==1: # se a exclusão for da junção 1
 
-        st.session_state.df_juncao_voos = st.session_state.df_juncao_voos[st.session_state.df_juncao_voos['Junção']!=juncao_limpar].reset_index(drop=True)
+        st.session_state.df_juncao_voos = st.session_state.df_juncao_voos[st.session_state.df_juncao_voos['Junção']!=juncao_limpar]\
+        .reset_index(drop=True)
 
         for index, value in st.session_state.df_juncao_voos['Junção'].items():
 
@@ -3862,6 +3863,8 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
         st.success('Todos os hoteis estão cadastrados na lista de sequência de hoteis')
 
         df_router_filtrado_2 = criar_df_servicos_2(df_router_filtrado, st.session_state.df_juncao_voos, df_hoteis_ref)
+
+        st.write('Aqui')
 
         roteiro = 0
 
