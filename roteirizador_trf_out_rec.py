@@ -2593,8 +2593,6 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
     st.session_state.df_roteiros_apoios_alternativos_pd = df_roteiros_apoios_alternativos_pd
 
-    st.session_state.servico_roteiro = servico_roteiro
-
     # Plotando roteiros de cada carro se não houver rotas alternativas
 
     if len(df_roteiros_alternativos_bv)==0 and len(df_roteiros_alternativos_pd)==0:
@@ -2787,8 +2785,6 @@ elif roteirizar and servico_roteiro=='OUT (MILAGRES)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
-    st.session_state.servico_roteiro = servico_roteiro
-
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -2904,8 +2900,6 @@ elif roteirizar and servico_roteiro=='OUT (MACEIÓ-AL)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
-
-    st.session_state.servico_roteiro = servico_roteiro
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3023,8 +3017,6 @@ elif roteirizar and servico_roteiro=='OUT (ALAGOAS)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
-    st.session_state.servico_roteiro = servico_roteiro
-
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3140,8 +3132,6 @@ elif roteirizar and servico_roteiro=='OUT RECIFE (CENTRO)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
-
-    st.session_state.servico_roteiro = servico_roteiro
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3259,8 +3249,6 @@ elif roteirizar and servico_roteiro=='OUT (JOÃO PESSOA-PB)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
-    st.session_state.servico_roteiro = servico_roteiro
-
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3376,8 +3364,6 @@ elif roteirizar and servico_roteiro=='OUT (CARNEIROS I TAMANDARÉ)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
-
-    st.session_state.servico_roteiro = servico_roteiro
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3495,8 +3481,6 @@ elif roteirizar and servico_roteiro=='OUT (FAZENDA NOVA)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
-    st.session_state.servico_roteiro = servico_roteiro
-
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3612,8 +3596,6 @@ elif roteirizar and servico_roteiro=='OUT (OLINDA)':
     st.session_state.df_roteiros_apoios = df_roteiros_apoios
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
-
-    st.session_state.servico_roteiro = servico_roteiro
 
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -3849,8 +3831,6 @@ elif roteirizar and servico_roteiro=='OUT (CABO DE STO AGOSTINHO)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
-    st.session_state.servico_roteiro = servico_roteiro
-
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3968,8 +3948,6 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
     st.session_state.df_roteiros_apoios_alternativos = df_roteiros_apoios_alternativos
 
-    st.session_state.servico_roteiro = servico_roteiro
-
     verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                                                     df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, 
@@ -3979,7 +3957,7 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 # Se houver rotas alternativas e o serviço não for 'OUT (BOA VIAGEM | PIEDADE)'
 
 if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternativos)>0 and \
-    st.session_state.servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
+    servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
 
     st.divider()
 
@@ -4063,7 +4041,7 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
 elif 'nome_html_bv' in st.session_state and \
     (len(st.session_state.df_roteiros_alternativos_bv)>0 or len(st.session_state.df_roteiros_alternativos_pd)>0) and \
-        st.session_state.servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
+        servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
 
     st.divider()
 
