@@ -2226,6 +2226,19 @@ with row2[0]:
 
     data_roteiro = container_roteirizar.date_input('Data do Roteiro', value=None, format='DD/MM/YYYY', key='data_roteiro')
 
+    df_router_data_roteiro = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
+                                                        (st.session_state.df_router['Tipo de Servico']=='OUT') & 
+                                                        (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                        (st.session_state.df_router['Voo']!='RG - 3333')].reset_index(drop=True)
+
+    lista_servicos = df_router_data_roteiro['Servico'].unique().tolist()
+
+    servico_roteiro = container_roteirizar.selectbox('Serviço', lista_servicos, index=None, placeholder='Escolha um Serviço', key='servico_roteiro')
+
+    if 'df_servico_voos_horarios' in st.session_state:
+
+        st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True)   
+
     row_container = container_roteirizar.columns(2)
 
     # Botão roteirizar
@@ -2242,27 +2255,30 @@ with row2[0]:
 
 # Gerar dataframe com os voos da data selecionada e imprimir na tela o dataframe
 
-if visualizar_voos:
+if visualizar_voos and servico_roteiro:
 
-    df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
-                                                    (st.session_state.df_router['Tipo de Servico']=='OUT') & 
-                                                    (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
-                                                    (st.session_state.df_router['Voo']!='RG - 3333')].reset_index(drop=True)
+    if servico_roteiro!='OUT (PORTO DE GALINHAS)' or servico_roteiro!='OUT (SERRAMBI':
+
+        df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
+                                                        (st.session_state.df_router['Tipo de Servico']=='OUT') & 
+                                                        (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                        (st.session_state.df_router['Voo']!='RG - 3333') & 
+                                                        ((st.session_state.df_router['Servico']=='OUT (PORTO DE GALINHAS)') | 
+                                                         (st.session_state.df_router['Servico']=='OUT (SERRAMBI)'))].reset_index(drop=True)
+
+    else:
+
+        df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
+                                                        (st.session_state.df_router['Tipo de Servico']=='OUT') & 
+                                                        (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                        (st.session_state.df_router['Voo']!='RG - 3333') & 
+                                                        (st.session_state.df_router['Servico']==servico_roteiro)]\
+                                                        .reset_index(drop=True)
     
-    st.session_state.df_servico_voos_horarios = df_router_filtrado[['Servico', 'Voo', 'Horario Voo']].sort_values(by=['Servico', 'Horario Voo'])\
-        .drop_duplicates().reset_index(drop=True)
+    st.session_state.df_servico_voos_horarios = df_router_filtrado[['Servico', 'Voo', 'Horario Voo']]\
+    .sort_values(by=['Horario Voo']).drop_duplicates().reset_index(drop=True)
     
     st.session_state.df_servico_voos_horarios['Horario Voo'] = pd.to_datetime(st.session_state.df_servico_voos_horarios['Horario Voo'], format='%H:%M:%S').dt.time
-
-    with row2[0]:
-
-        st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True)   
-
-if 'df_servico_voos_horarios' in st.session_state:
-
-    lista_servicos = st.session_state.df_servico_voos_horarios['Servico'].unique().tolist()
-
-    servico_roteiro = container_roteirizar.selectbox('Serviço', lista_servicos, index=None, placeholder='Escolha um Serviço', key='servico_roteiro')
 
 # Formulário de Junção de Voos
 
