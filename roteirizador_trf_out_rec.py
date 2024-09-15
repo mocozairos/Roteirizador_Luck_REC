@@ -2625,8 +2625,6 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
     if len(df_roteiros_alternativos_bv)==0 and len(df_roteiros_alternativos_pd)==0:
 
-        # Aqui
-
         lista_dfs = [df_hoteis_pax_max_bv, df_juncoes_pax_max_bv, df_voos_pax_max_bv, df_router_filtrado_bv_2, df_roteiros_apoios_bv, 
                      df_roteiros_apoios_alternativos_bv, df_roteiros_alternativos_bv, df_hoteis_pax_max_pd, df_juncoes_pax_max_pd, 
                      df_voos_pax_max_pd, df_router_filtrado_pd_2, df_roteiros_apoios_pd, df_roteiros_apoios_alternativos_pd, 
@@ -4027,6 +4025,12 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
 # Se houver rotas alternativas e o serviço não for 'OUT (BOA VIAGEM | PIEDADE)'
 
+# Aqui
+
+st.write(len(st.session_state.df_roteiros_alternativos_bv))
+
+st.write(len(st.session_state.df_roteiros_alternativos_pd))
+
 if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternativos)>0 and \
     servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
 
@@ -4077,8 +4081,6 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
         else:
 
             df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos.columns.tolist())
-
-        # Aqui
 
         lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                      df_roteiros_apoios_alternativos, df_roteiros_alternativos]
@@ -4192,8 +4194,6 @@ elif 'nome_html_bv' in st.session_state and \
 
                 df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_bv.columns.tolist())
 
-            # Aqui
-
             lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                      df_roteiros_apoios_alternativos, df_roteiros_alternativos]
 
@@ -4260,8 +4260,6 @@ elif 'nome_html_bv' in st.session_state and \
         df_roteiros_apoios_alternativos = st.session_state.df_roteiros_apoios_alternativos_bv
 
         nome_html = st.session_state.nome_html_bv
-
-        # Aqui
 
         lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                      df_roteiros_apoios_alternativos, df_roteiros_alternativos]
@@ -4356,8 +4354,6 @@ elif 'nome_html_bv' in st.session_state and \
             else:
 
                 df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_pd.columns.tolist())
-
-            # Aqui
             
             lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                      df_roteiros_apoios_alternativos, df_roteiros_alternativos]
@@ -4425,8 +4421,6 @@ elif 'nome_html_bv' in st.session_state and \
         df_roteiros_apoios_alternativos = st.session_state.df_roteiros_apoios_alternativos_pd
 
         nome_html = st.session_state.nome_html_pd
-
-        # Aqui
 
         lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                      df_roteiros_apoios_alternativos, df_roteiros_alternativos]
