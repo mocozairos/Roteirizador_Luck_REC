@@ -2715,6 +2715,10 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
             key='download_pd'
         )
 
+        if 'df_servico_voos_horarios' in st.session_state:
+            
+            st.session_state['df_servico_voos_horarios'] = pd.DataFrame(columns=['Servico', 'Voo', 'Horario Voo']) 
+
     else:
 
         with row_warning[0]:
