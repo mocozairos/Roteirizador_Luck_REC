@@ -328,10 +328,6 @@ def roteirizar_hoteis_mais_pax_max(df_servicos, roteiro, df_hoteis_pax_max):
 
                 df_hotel_pax_max = df_servicos[(df_servicos['Modo do Servico']==modo) & (df_servicos['Servico']==servico) & 
                                                 (df_servicos['Voo']==ref_voo) & (df_servicos['Est Origem']==hotel)].reset_index()
-
-                # Aqui
-
-                st.dataframe(df_hotel_pax_max)
                 
                 paxs_total_ref = 0
                 
@@ -343,17 +339,7 @@ def roteirizar_hoteis_mais_pax_max(df_servicos, roteiro, df_hoteis_pax_max):
 
                     else:
 
-                        # Aqui
-
-                        st.write(f'Verificação = {paxs_total_ref+value}')
-
-                        st.write(f'Paxs reserva atual = {value}')
-
                         paxs_total_ref+=value
-
-                        # Aqui
-
-                        st.write(f'Paxs Acumulado = {paxs_total_ref}')
 
                         df_servicos = df_servicos.drop(index=df_hotel_pax_max.at[index_2, 'index'])
 
