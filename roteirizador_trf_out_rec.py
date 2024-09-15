@@ -2339,6 +2339,10 @@ with row2[1]:
 
             st.session_state.df_juncao_voos = pd.concat([st.session_state.df_juncao_voos, df_voos_hi_hf], ignore_index=True)
 
+            horario_inicial = None
+
+            horario_final = None
+
 # Botões pra limpar junções
 
 with row2[2]:
