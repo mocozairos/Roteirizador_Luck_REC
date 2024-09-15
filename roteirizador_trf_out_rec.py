@@ -155,6 +155,8 @@ def definir_horario_primeiro_hotel(df, index):
 
         hora_voo = df.at[index, 'Menor Horário']
 
+    hora_voo = pd.to_datetime(hora_voo).time()
+
     data_hora_voo_str = f'{data_voo} {hora_voo}'
 
     data_hora_voo = pd.to_datetime(data_hora_voo_str, format='%Y-%m-%d %H:%M:%S')
