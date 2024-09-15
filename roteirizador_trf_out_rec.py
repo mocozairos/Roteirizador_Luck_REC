@@ -2250,10 +2250,6 @@ with row2[0]:
 
         visualizar_voos = st.button('Visualizar Voos')
 
-    if servico_roteiro and 'df_servico_voos_horarios' in st.session_state:
-
-        st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True) 
-
 # Gerar dataframe com os voos da data selecionada e imprimir na tela o dataframe
 
 if visualizar_voos and servico_roteiro:
@@ -2281,7 +2277,10 @@ if visualizar_voos and servico_roteiro:
     
     st.session_state.df_servico_voos_horarios['Horario Voo'] = pd.to_datetime(st.session_state.df_servico_voos_horarios['Horario Voo'], format='%H:%M:%S').dt.time
 
+if servico_roteiro and 'df_servico_voos_horarios' in st.session_state:
+
     st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True) 
+
 
 # Formulário de Junção de Voos
 
