@@ -4032,7 +4032,7 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
         if 'df_servico_voos_horarios' in st.session_state:
             
-            del st.session_state['df_servico_voos_horarios'] 
+            st.session_state['df_servico_voos_horarios'] = pd.DataFrame(columns=['Servico', 'Voo', 'Horario Voo'])
     
         df_hoteis_pax_max = st.session_state.df_hoteis_pax_max
 
@@ -4144,7 +4144,7 @@ elif 'nome_html_bv' in st.session_state and \
 
             if 'df_servico_voos_horarios' in st.session_state:
             
-                del st.session_state['df_servico_voos_horarios'] 
+                st.session_state['df_servico_voos_horarios'] = pd.DataFrame(columns=['Servico', 'Voo', 'Horario Voo'])
     
             df_hoteis_pax_max = st.session_state.df_hoteis_pax_max_bv
 
@@ -4277,7 +4277,7 @@ elif 'nome_html_bv' in st.session_state and \
 
             if 'df_servico_voos_horarios' in st.session_state:
             
-                del st.session_state['df_servico_voos_horarios'] 
+                st.session_state['df_servico_voos_horarios'] = pd.DataFrame(columns=['Servico', 'Voo', 'Horario Voo']) 
     
             df_hoteis_pax_max = st.session_state.df_hoteis_pax_max_pd
 
