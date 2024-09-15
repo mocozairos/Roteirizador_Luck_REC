@@ -302,6 +302,10 @@ def roteirizar_hoteis_mais_pax_max(df_servicos, roteiro, df_hoteis_pax_max):
 
     if len(df_ref_sem_juncao)>0:
 
+        # Aqui
+
+        st.dataframe(df_ref_sem_juncao)
+
         for index in range(len(df_ref_sem_juncao)):
 
             carro=0
