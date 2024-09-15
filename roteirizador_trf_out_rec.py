@@ -2638,7 +2638,7 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
                 n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
 
-        with row_rotas_alternativas[0]:
+        with row_warning[0]:
 
             st.header(f'A roteirização usou um total de {n_carros} carros')
 
