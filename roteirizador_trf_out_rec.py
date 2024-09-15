@@ -2295,25 +2295,17 @@ with row2[1]:
 
         horario_final = st.time_input('Horário Final Voo', value=None, key='horario_final', step=300)
 
-        # Captando qual o serviço da junção
-
-        if 'df_servico_voos_horarios' in st.session_state:
-
-            lista_servicos = st.session_state.df_servico_voos_horarios['Servico'].unique().tolist()
-
-            servico = st.selectbox('Serviço', lista_servicos, index=None, placeholder='Escolha um Serviço')
-
         # Filtrando dataframe por Horario Voo e Servico
 
         if horario_inicial and horario_final and servico:
 
-            if servico!='OUT (PORTO DE GALINHAS)':
+            if servico_roteiro!='OUT (PORTO DE GALINHAS)' and servico_roteiro!='OUT (SERRAMBI)':
 
                 df_voos_hi_hf = st.session_state.df_servico_voos_horarios\
                     [(st.session_state.df_servico_voos_horarios['Horario Voo']>=horario_inicial) & 
                      (st.session_state.df_servico_voos_horarios['Horario Voo']<=horario_final) & 
                      (st.session_state.df_servico_voos_horarios['Voo']!='RG - 3333') & 
-                     (st.session_state.df_servico_voos_horarios['Servico']==servico)]\
+                     (st.session_state.df_servico_voos_horarios['Servico']==servico_roteiro)]\
                         [['Servico', 'Voo', 'Horario Voo']].reset_index(drop=True)
                 
             else:
@@ -2322,7 +2314,7 @@ with row2[1]:
                     [(st.session_state.df_servico_voos_horarios['Horario Voo']>=horario_inicial) & 
                      (st.session_state.df_servico_voos_horarios['Horario Voo']<=horario_final) & 
                      (st.session_state.df_servico_voos_horarios['Voo']!='RG - 3333') & 
-                     ((st.session_state.df_servico_voos_horarios['Servico']==servico) | 
+                     ((st.session_state.df_servico_voos_horarios['Servico']=='OUT (PORTO DE GALINHAS)') | 
                       (st.session_state.df_servico_voos_horarios['Servico']=='OUT (SERRAMBI)'))]\
                         [['Servico', 'Voo', 'Horario Voo']].reset_index(drop=True)
             
