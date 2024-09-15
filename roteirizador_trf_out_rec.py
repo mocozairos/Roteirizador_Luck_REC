@@ -107,13 +107,15 @@ def ordenar_juncoes(df_router_ref):
         df_ref = df_router_ref[(df_router_ref['Modo do Servico']=='REGULAR') & (df_router_ref['Junção']==juncao)].sort_values(by='Sequência', ascending=False)\
             .reset_index()
 
-        index_inicial = df_ref['index'].min()
+        if len(df_ref)>0:
 
-        index_final = df_ref['index'].max()
-
-        df_ref = df_ref.drop('index', axis=1)
-
-        df_router_ref.iloc[index_inicial:index_final+1] = df_ref
+            index_inicial = df_ref['index'].min()
+    
+            index_final = df_ref['index'].max()
+    
+            df_ref = df_ref.drop('index', axis=1)
+    
+            df_router_ref.iloc[index_inicial:index_final+1] = df_ref
 
     return df_router_ref
 
