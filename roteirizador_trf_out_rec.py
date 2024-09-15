@@ -155,8 +155,6 @@ def definir_horario_primeiro_hotel(df, index):
 
         hora_voo = df.at[index, 'Menor Horário']
 
-    hora_voo = pd.to_datetime(hora_voo).time()
-
     data_hora_voo_str = f'{data_voo} {hora_voo}'
 
     data_hora_voo = pd.to_datetime(data_hora_voo_str, format='%Y-%m-%d %H:%M:%S')
@@ -2129,6 +2127,10 @@ if not 'df_router' in st.session_state:
 
     st.session_state.df_router = gerar_df_phoenix('vw_router')
 
+    # Aqui
+
+    st.session_state.df_router['Horario Voo'] = pd.to_datetime(st.session_state.df_router['Horario Voo'], format='%H:%M:%S').dt.time
+
 # Puxando abas de hoteis
 
 if not 'df_hoteis_boa_viagem' in st.session_state:
@@ -2221,6 +2223,8 @@ with row2[0]:
         if atualizar_phoenix:
 
             st.session_state.df_router = gerar_df_phoenix('vw_router')
+
+            st.session_state.df_router['Horario Voo'] = pd.to_datetime(st.session_state.df_router['Horario Voo'], format='%H:%M:%S').dt.time
 
     # Campo de data
 
