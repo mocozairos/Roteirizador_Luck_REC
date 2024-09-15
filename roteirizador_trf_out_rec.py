@@ -349,6 +349,18 @@ def roteirizar_hoteis_mais_pax_max(df_servicos, roteiro, df_hoteis_pax_max):
 
                         df_hoteis_pax_max.at[index_2, 'Carros']=carro
 
+    # Aqui
+
+    st.dataframe(df_hoteis_pax_max)
+
+    df_hoteis_pax_max['Horario Voo'] = pd.to_datetime(df_hoteis_pax_max['Horario Voo'], format='%H:%M:%S').dt.time
+
+    df_hoteis_pax_max['Menor Horário'] = pd.to_datetime(df_hoteis_pax_max['Menor Horário'], format='%H:%M:%S').dt.time
+
+    st.write(df_hoteis_pax_max['Horario Voo'].dtype)
+
+    st.write(df_hoteis_pax_max['Menor Horário'].dtype)
+
     for index in range(len(df_hoteis_pax_max)):
 
         df_hoteis_pax_max.at[index, 'Data Horario Apresentacao'] = definir_horario_primeiro_hotel(df_hoteis_pax_max, index)
