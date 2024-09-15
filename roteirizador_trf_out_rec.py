@@ -2623,6 +2623,25 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
     if len(df_roteiros_alternativos_bv)==0 and len(df_roteiros_alternativos_pd)==0:
 
+        # Aqui
+
+        lista_dfs = [df_hoteis_pax_max_bv, df_juncoes_pax_max_bv, df_voos_pax_max_bv, df_router_filtrado_bv_2, df_roteiros_apoios_bv, 
+                     df_roteiros_apoios_alternativos_bv, df_roteiros_alternativos_bv, df_hoteis_pax_max_pd, df_juncoes_pax_max_pd, 
+                     df_voos_pax_max_pd, df_router_filtrado_pd_2, df_roteiros_apoios_pd, df_roteiros_apoios_alternativos_pd, 
+                     df_roteiros_alternativos_pd]
+
+        n_carros = 0
+
+        for df in lista_dfs:
+
+            if len(df)>0:
+
+                n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
+
+        with row_rotas_alternativas[0]:
+
+            st.header(f'A roteirização usou um total de {n_carros} carros')
+
         if len(df_hoteis_pax_max_bv)>0:
 
             coluna = plotar_roteiros_simples(df_hoteis_pax_max_bv, row3, coluna)
@@ -4028,8 +4047,6 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
         
     else:
 
-        # Aqui
-
         if 'df_servico_voos_horarios' in st.session_state:
             
             st.session_state['df_servico_voos_horarios'] = pd.DataFrame(columns=['Servico', 'Voo', 'Horario Voo'])
@@ -4054,6 +4071,8 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
         else:
 
             df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos.columns.tolist())
+
+        # Aqui
 
         lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
                      df_roteiros_apoios_alternativos, df_roteiros_alternativos]
@@ -4140,8 +4159,6 @@ elif 'nome_html_bv' in st.session_state and \
             
         else:
 
-            # Aqui
-
             if 'df_servico_voos_horarios' in st.session_state:
             
                 st.session_state['df_servico_voos_horarios'] = pd.DataFrame(columns=['Servico', 'Voo', 'Horario Voo'])
@@ -4168,6 +4185,23 @@ elif 'nome_html_bv' in st.session_state and \
             else:
 
                 df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_bv.columns.tolist())
+
+            # Aqui
+
+            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
+                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+
+            n_carros = 0
+    
+            for df in lista_dfs:
+    
+                if len(df)>0:
+    
+                    n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
+    
+            with row_rotas_alternativas[0]:
+    
+                st.header(f'A roteirização usou um total de {n_carros} carros')
 
             if len(df_hoteis_pax_max)>0:
 
@@ -4221,6 +4255,23 @@ elif 'nome_html_bv' in st.session_state and \
 
         nome_html = st.session_state.nome_html_bv
 
+        # Aqui
+
+        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
+                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+
+        n_carros = 0
+
+        for df in lista_dfs:
+
+            if len(df)>0:
+
+                n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
+
+        with row_rotas_alternativas[0]:
+
+            st.header(f'A roteirização usou um total de {n_carros} carros')
+
         if len(df_hoteis_pax_max)>0:
 
             coluna = plotar_roteiros_simples(df_hoteis_pax_max, row3, coluna)
@@ -4273,8 +4324,6 @@ elif 'nome_html_bv' in st.session_state and \
             
         else:
 
-            # Aqui
-
             if 'df_servico_voos_horarios' in st.session_state:
             
                 st.session_state['df_servico_voos_horarios'] = pd.DataFrame(columns=['Servico', 'Voo', 'Horario Voo']) 
@@ -4301,6 +4350,23 @@ elif 'nome_html_bv' in st.session_state and \
             else:
 
                 df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_pd.columns.tolist())
+
+            # Aqui
+            
+            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
+                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+
+            n_carros = 0
+    
+            for df in lista_dfs:
+    
+                if len(df)>0:
+    
+                    n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
+    
+            with row_rotas_alternativas[0]:
+    
+                st.header(f'A roteirização usou um total de {n_carros} carros')
 
             if len(df_hoteis_pax_max)>0:
 
@@ -4353,6 +4419,23 @@ elif 'nome_html_bv' in st.session_state and \
         df_roteiros_apoios_alternativos = st.session_state.df_roteiros_apoios_alternativos_pd
 
         nome_html = st.session_state.nome_html_pd
+
+        # Aqui
+
+        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
+                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+
+        n_carros = 0
+
+        for df in lista_dfs:
+
+            if len(df)>0:
+
+                n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
+
+        with row_rotas_alternativas[0]:
+
+            st.header(f'A roteirização usou um total de {n_carros} carros')
 
         if len(df_hoteis_pax_max)>0:
 
