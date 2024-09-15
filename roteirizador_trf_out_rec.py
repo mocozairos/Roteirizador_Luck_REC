@@ -4027,6 +4027,12 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
                                                      st.session_state.df_roteiros_apoios_alternativos, coluna)
         
     else:
+
+        # Aqui
+
+        if 'df_servico_voos_horarios' in st.session_state:
+            
+            del st.session_state['df_servico_voos_horarios'] 
     
         df_hoteis_pax_max = st.session_state.df_hoteis_pax_max
 
@@ -4133,6 +4139,12 @@ elif 'nome_html_bv' in st.session_state and \
                                                          st.session_state.df_roteiros_apoios_alternativos_bv, coluna)
             
         else:
+
+            # Aqui
+
+            if 'df_servico_voos_horarios' in st.session_state:
+            
+                del st.session_state['df_servico_voos_horarios'] 
     
             df_hoteis_pax_max = st.session_state.df_hoteis_pax_max_bv
 
@@ -4260,6 +4272,12 @@ elif 'nome_html_bv' in st.session_state and \
                                                          st.session_state.df_roteiros_apoios_alternativos_pd, coluna)
             
         else:
+
+            # Aqui
+
+            if 'df_servico_voos_horarios' in st.session_state:
+            
+                del st.session_state['df_servico_voos_horarios'] 
     
             df_hoteis_pax_max = st.session_state.df_hoteis_pax_max_pd
 
