@@ -2337,10 +2337,6 @@ with row2[1]:
 
             st.session_state.df_juncao_voos = pd.concat([st.session_state.df_juncao_voos, df_voos_hi_hf], ignore_index=True)
 
-            # with row2[2]:
-
-            #     st.dataframe(st.session_state.df_juncao_voos, hide_index=True)
-
 # Botões pra limpar junções
 
 with row2[2]:
