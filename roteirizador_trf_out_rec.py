@@ -2233,9 +2233,10 @@ with row2[0]:
 
     lista_servicos = df_router_data_roteiro['Servico'].unique().tolist()
 
-    servico_roteiro = container_roteirizar.selectbox('Serviço', lista_servicos, index=None, placeholder='Escolha um Serviço', key='servico_roteiro')
+    servico_roteiro = container_roteirizar.selectbox('Serviço', lista_servicos, index=None, placeholder='Escolha um Serviço', 
+                                                     key='servico_roteiro')
 
-    if 'df_servico_voos_horarios' in st.session_state:
+    if servico_roteiro and 'df_servico_voos_horarios' in st.session_state:
 
         st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True)   
 
