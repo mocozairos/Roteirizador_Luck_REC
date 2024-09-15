@@ -2127,10 +2127,6 @@ if not 'df_router' in st.session_state:
 
     st.session_state.df_router = gerar_df_phoenix('vw_router')
 
-    # Aqui
-
-    st.session_state.df_router['Horario Voo'] = pd.to_datetime(st.session_state.df_router['Horario Voo'], format='%H:%M:%S').dt.time
-
 # Puxando abas de hoteis
 
 if not 'df_hoteis_boa_viagem' in st.session_state:
@@ -2223,8 +2219,6 @@ with row2[0]:
         if atualizar_phoenix:
 
             st.session_state.df_router = gerar_df_phoenix('vw_router')
-
-            st.session_state.df_router['Horario Voo'] = pd.to_datetime(st.session_state.df_router['Horario Voo'], format='%H:%M:%S').dt.time
 
     # Campo de data
 
