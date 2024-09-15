@@ -4148,7 +4148,7 @@ elif 'nome_html_bv' in st.session_state and \
         with row_rotas_alternativas[0]:
 
             rotas_alternativas = st.multiselect('Selecione as Rotas Alternativas que serão usadas', 
-                                                st.session_state.df_roteiros_apoios_alternativos_bv['Roteiro'].unique().tolist())
+                                                st.session_state.df_roteiros_alternativos_bv['Roteiro'].unique().tolist())
     
             gerar_roteiro_final = st.button('Gerar Roteiro Final')
 
@@ -4309,7 +4309,7 @@ elif 'nome_html_bv' in st.session_state and \
         with row_rotas_alternativas[0]:
 
             rotas_alternativas = st.multiselect('Selecione as Rotas Alternativas que serão usadas', 
-                                                st.session_state.df_roteiros_apoios_alternativos_pd['Roteiro'].unique().tolist())
+                                                st.session_state.df_roteiros_alternativos_pd['Roteiro'].unique().tolist())
     
             gerar_roteiro_final = st.button('Gerar Roteiro Final')
 
