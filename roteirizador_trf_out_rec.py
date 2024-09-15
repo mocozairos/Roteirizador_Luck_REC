@@ -4025,12 +4025,6 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
 # Se houver rotas alternativas e o serviço não for 'OUT (BOA VIAGEM | PIEDADE)'
 
-# Aqui
-
-st.write(len(st.session_state.df_roteiros_alternativos_bv))
-
-st.write(len(st.session_state.df_roteiros_alternativos_pd))
-
 if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternativos)>0 and \
     servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
 
@@ -4135,7 +4129,7 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
 elif 'nome_html_bv' in st.session_state and \
     (len(st.session_state.df_roteiros_alternativos_bv)>0 or len(st.session_state.df_roteiros_alternativos_pd)>0) and \
-        servico_roteiro!='OUT (BOA VIAGEM | PIEDADE)':
+        servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
     st.divider()
 
