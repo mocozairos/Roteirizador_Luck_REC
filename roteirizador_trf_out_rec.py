@@ -2234,11 +2234,7 @@ with row2[0]:
     lista_servicos = df_router_data_roteiro['Servico'].unique().tolist()
 
     servico_roteiro = container_roteirizar.selectbox('Serviço', lista_servicos, index=None, placeholder='Escolha um Serviço', 
-                                                     key='servico_roteiro')
-
-    if servico_roteiro and 'df_servico_voos_horarios' in st.session_state:
-
-        st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True)   
+                                                     key='servico_roteiro')  
 
     row_container = container_roteirizar.columns(2)
 
@@ -2253,6 +2249,10 @@ with row2[0]:
     with row_container[1]:
 
         visualizar_voos = st.button('Visualizar Voos')
+
+    if servico_roteiro and 'df_servico_voos_horarios' in st.session_state:
+
+        st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True) 
 
 # Gerar dataframe com os voos da data selecionada e imprimir na tela o dataframe
 
@@ -2280,6 +2280,8 @@ if visualizar_voos and servico_roteiro:
     .sort_values(by=['Horario Voo']).drop_duplicates().reset_index(drop=True)
     
     st.session_state.df_servico_voos_horarios['Horario Voo'] = pd.to_datetime(st.session_state.df_servico_voos_horarios['Horario Voo'], format='%H:%M:%S').dt.time
+
+    st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True) 
 
 # Formulário de Junção de Voos
 
