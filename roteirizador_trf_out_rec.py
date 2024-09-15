@@ -328,10 +328,6 @@ def roteirizar_hoteis_mais_pax_max(df_servicos, roteiro, df_hoteis_pax_max):
 
                 df_hotel_pax_max = df_servicos[(df_servicos['Modo do Servico']==modo) & (df_servicos['Servico']==servico) & 
                                                 (df_servicos['Voo']==ref_voo) & (df_servicos['Est Origem']==hotel)].reset_index()
-
-                # Aqui
-
-                st.dataframe(df_hotel_pax_max)
                 
                 paxs_total_ref = 0
                 
@@ -602,11 +598,23 @@ def plotar_roteiros_simples(df_servicos, row3, coluna):
 
             paxs_total = int(df_ref_2['Total ADT | CHD'].sum())
 
-            titulo_roteiro = f'Roteiro {item}'
+            if modo=='REGULAR':
+    
+                titulo_roteiro = f'Roteiro {item}'
 
-            titulo_carro = f'Veículo {carro}'
+                titulo_carro = f'Veículo {carro}'
 
-            titulo_modo_voo_pax = f'*{modo.title()} | {titulo_voos} | {paxs_total} paxs*'
+                titulo_modo_voo_pax = f'*{modo.title()} | {titulo_voos} | {paxs_total} paxs*'
+
+            else:
+
+                reserva = df_ref_2.at[0, 'Reserva']
+
+                titulo_roteiro = f'Roteiro {item}'
+
+                titulo_carro = f'Veículo {carro}'
+
+                titulo_modo_voo_pax = f'*{modo.title()} | {reserva} | {titulo_voos} | {paxs_total} paxs*'
 
             df_ref_3 = df_ref_2.groupby('Est Origem').agg({'Total ADT | CHD': 'sum', 'Data Horario Apresentacao': 'first'})\
                 .sort_values(by='Data Horario Apresentacao').reset_index()
