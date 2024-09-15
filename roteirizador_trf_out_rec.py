@@ -2279,7 +2279,9 @@ if visualizar_voos and servico_roteiro:
 
 if servico_roteiro and 'df_servico_voos_horarios' in st.session_state:
 
-    st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True) 
+    with row2[0]:
+
+        st.dataframe(st.session_state.df_servico_voos_horarios, hide_index=True) 
 
 
 # Formulário de Junção de Voos
