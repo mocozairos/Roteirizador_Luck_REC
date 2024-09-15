@@ -2272,7 +2272,7 @@ with row2[0]:
 
 if visualizar_voos and servico_roteiro:
 
-    if servico_roteiro!='OUT (PORTO DE GALINHAS)' or servico_roteiro!='OUT (SERRAMBI':
+    if servico_roteiro=='OUT (PORTO DE GALINHAS)' or servico_roteiro=='OUT (SERRAMBI)':
 
         df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                         (st.session_state.df_router['Tipo de Servico']=='OUT') & 
