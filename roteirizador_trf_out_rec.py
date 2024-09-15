@@ -2296,7 +2296,7 @@ with row2[1]:
 
         # Filtrando dataframe por Horario Voo e Servico
 
-        if horario_inicial and horario_final and servico:
+        if horario_inicial and horario_final and servico_roteiro:
 
             if servico_roteiro!='OUT (PORTO DE GALINHAS)' and servico_roteiro!='OUT (SERRAMBI)':
 
