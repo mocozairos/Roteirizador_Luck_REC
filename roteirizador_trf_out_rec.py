@@ -2290,6 +2290,12 @@ with row2[1]:
 
     with st.form('juntar_voos_form_novo'):
 
+        if 'horario_inicial' in st.session_state:
+
+            horario_inicial = st.session_state.horario_inicial
+    
+            horario_final = st.session_state.horario_final
+
         # Captando intervalo entre voos
 
         horario_inicial = st.time_input('Horário Inicial Voo', value=None, key='horario_inicial', step=300)
@@ -2339,9 +2345,9 @@ with row2[1]:
 
             st.session_state.df_juncao_voos = pd.concat([st.session_state.df_juncao_voos, df_voos_hi_hf], ignore_index=True)
 
-            horario_inicial = None
+            st.session_state.horario_inicial = None
 
-            horario_final = None
+            st.session_state.horario_final = None
 
 # Botões pra limpar junções
 
