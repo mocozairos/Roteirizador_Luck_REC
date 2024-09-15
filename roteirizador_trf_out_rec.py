@@ -4044,7 +4044,9 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
                 n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
 
-        st.header(f'A roteirização usou um total de {n_carros} carros')
+        with row_rotas_alternativas[0]:
+
+            st.header(f'A roteirização usou um total de {n_carros} carros')
 
         if len(df_hoteis_pax_max)>0:
 
