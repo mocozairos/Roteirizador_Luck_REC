@@ -1937,6 +1937,8 @@ def gerar_horarios_apresentacao(df_servicos, roteiro, max_hoteis):
 
 def definir_html(df_ref):
 
+    df_ref = df_ref.sort_values(by='Data Horario Apresentacao').reset_index(drop=True)
+
     html=df_ref.to_html(index=False)
 
     html = f"""
