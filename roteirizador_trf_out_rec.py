@@ -1992,7 +1992,7 @@ def inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos):
         for carro in df_ref_roteiro['Carros'].unique().tolist():
 
             df_ref_carro = df_ref_roteiro[df_ref_roteiro['Carros']==carro]\
-                [['Roteiro', 'Carros', 'Modo do Servico', 'Voo', 'Junção', 'Est Origem', 'Total ADT | CHD', 
+                [['Roteiro', 'Carros', 'Modo do Servico', 'Voo', 'Horario Voo', 'Junção', 'Est Origem', 'Total ADT | CHD', 
                 'Data Horario Apresentacao']].reset_index(drop=True)
             
             total_paxs = df_ref_carro['Total ADT | CHD'].sum()
@@ -2014,7 +2014,7 @@ def inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos):
             for carro in df_ref_roteiro_alt['Carros'].unique().tolist():
 
                 df_ref_carro_alt = df_ref_roteiro_alt[df_ref_roteiro_alt['Carros']==carro]\
-                    [['Roteiro', 'Carros', 'Modo do Servico', 'Voo', 'Junção', 'Est Origem', 'Total ADT | CHD', 
+                    [['Roteiro', 'Carros', 'Modo do Servico', 'Voo', 'Horario Voo', 'Junção', 'Est Origem', 'Total ADT | CHD', 
                     'Data Horario Apresentacao']].reset_index(drop=True)
                 
                 total_paxs = df_ref_carro_alt['Total ADT | CHD'].sum()
