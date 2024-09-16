@@ -2281,7 +2281,7 @@ if visualizar_voos and servico_roteiro:
                                                         (st.session_state.df_router['Tipo de Servico']=='OUT') & 
                                                         (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
                                                         (st.session_state.df_router['Voo']!='RG - 3333') & 
-                                                        (~pd.isna(st.session_state.df_router['Voo']) &
+                                                        (~pd.isna(st.session_state.df_router['Voo'])) &
                                                         ((st.session_state.df_router['Servico']=='OUT (PORTO DE GALINHAS)') | 
                                                          (st.session_state.df_router['Servico']=='OUT (SERRAMBI)'))].reset_index(drop=True)
 
@@ -2291,7 +2291,7 @@ if visualizar_voos and servico_roteiro:
                                                         (st.session_state.df_router['Tipo de Servico']=='OUT') & 
                                                         (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
                                                         (st.session_state.df_router['Voo']!='RG - 3333') & 
-                                                        (~pd.isna(st.session_state.df_router['Voo']) &
+                                                        (~pd.isna(st.session_state.df_router['Voo'])) &
                                                         (st.session_state.df_router['Servico']==servico_roteiro)]\
                                                         .reset_index(drop=True)
     
@@ -3919,7 +3919,7 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
-                                                    (~pd.isna(st.session_state.df_router['Voo']) &
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     ((st.session_state.df_router['Servico']==servico_roteiro) | 
                                                      (st.session_state.df_router['Servico']=='OUT (SERRAMBI)'))].reset_index(drop=True)
 
