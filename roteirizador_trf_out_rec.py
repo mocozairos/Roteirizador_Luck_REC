@@ -2433,6 +2433,7 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
                                                        (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                        (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
                                                        (st.session_state.df_router['Servico']==servico_roteiro) & 
+                                                       (~pd.isna(st.session_state.df_router['Voo'])) &
                                                        ~(st.session_state.df_router['Est Origem'].isin(lista_hoteis_piedade))]\
                                                         .reset_index(drop=True)
     
@@ -2440,6 +2441,7 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
                                                        (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                        (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
                                                        (st.session_state.df_router['Servico']==servico_roteiro) & 
+                                                       (~pd.isna(st.session_state.df_router['Voo'])) &
                                                        (st.session_state.df_router['Est Origem'].isin(lista_hoteis_piedade))]\
                                                         .reset_index(drop=True)
     
@@ -2737,6 +2739,7 @@ elif roteirizar and servico_roteiro=='OUT (MILAGRES)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -2855,6 +2858,7 @@ elif roteirizar and servico_roteiro=='OUT (MACEIÓ-AL)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -2973,6 +2977,7 @@ elif roteirizar and servico_roteiro=='OUT (ALAGOAS)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -3091,6 +3096,7 @@ elif roteirizar and servico_roteiro=='OUT RECIFE (CENTRO)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -3209,6 +3215,7 @@ elif roteirizar and servico_roteiro=='OUT (JOÃO PESSOA-PB)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -3327,6 +3334,7 @@ elif roteirizar and servico_roteiro=='OUT (CARNEIROS I TAMANDARÉ)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -3445,6 +3453,7 @@ elif roteirizar and servico_roteiro=='OUT (FAZENDA NOVA)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -3563,6 +3572,7 @@ elif roteirizar and servico_roteiro=='OUT (OLINDA)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -3681,6 +3691,7 @@ elif roteirizar and servico_roteiro=='OUT (MARAGOGI | JAPARATINGA)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
@@ -3799,6 +3810,7 @@ elif roteirizar and servico_roteiro=='OUT (CABO DE STO AGOSTINHO)':
     df_router_filtrado = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
                                                     (st.session_state.df_router['Tipo de Servico']=='OUT') &  
                                                     (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                    (~pd.isna(st.session_state.df_router['Voo'])) &
                                                     (st.session_state.df_router['Servico']==servico_roteiro)].reset_index(drop=True)
 
 
