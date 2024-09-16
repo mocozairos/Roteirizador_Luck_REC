@@ -2250,7 +2250,7 @@ with row2[0]:
                                                         (st.session_state.df_router['Tipo de Servico']=='OUT') & 
                                                         (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
                                                         (st.session_state.df_router['Voo']!='RG - 3333') & 
-                                                        (~pd.isna(st.session_state.df_router['Voo'])].reset_index(drop=True)
+                                                        (~pd.isna(st.session_state.df_router['Voo']))].reset_index(drop=True)
 
     lista_servicos = df_router_data_roteiro['Servico'].unique().tolist()
 
