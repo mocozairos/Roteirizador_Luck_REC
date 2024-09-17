@@ -219,17 +219,19 @@ def verificar_combinacoes(df, max_hoteis, pax_max_ref, df_hoteis, intervalo_hote
 
                 df_lista_combinacao = pd.merge(df_lista_combinacao, df_hoteis, on='Est Origem', how='left')
 
-                for index in range(len(df_lista_combinacao)):
+                if len(df_lista_combinacao)>1:
 
-                    intervalo_ref = definir_intervalo_ref(df_lista_combinacao, index, intervalo_hoteis)
-
-                    if intervalo_ref==intervalo_hoteis*2:
-
-                        intervalo_20=1
-
-                    else:
-
-                        intervalo_20=0
+                    for index in range(len(df_lista_combinacao))-1:
+    
+                        intervalo_ref = definir_intervalo_ref(df_lista_combinacao, index+1, intervalo_hoteis)
+    
+                        if intervalo_ref==intervalo_hoteis*2:
+    
+                            intervalo_20=1
+    
+                        else:
+    
+                            intervalo_20=0
 
                 if ~(len(lista_combinacao)==4 and intervalo_20==1):
 
