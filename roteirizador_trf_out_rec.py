@@ -2035,10 +2035,6 @@ def inserir_roteiros_html(nome_html, df_pdf):
 
         df_ref_roteiro = df_pdf[(df_pdf['Roteiro']==roteiro_ref) & (df_pdf['Carros']==carro_ref) & 
                           (df_pdf['Horario Voo / Menor Horário']==hv_ref)].reset_index(drop=True)
-        
-        if carro_ref==1:
-
-            roteiro+=1
 
         for carro in df_ref_roteiro['Carros'].unique().tolist():
 
@@ -2052,7 +2048,7 @@ def inserir_roteiros_html(nome_html, df_pdf):
 
             with open(nome_html, "a", encoding="utf-8") as file:
 
-                file.write(f'<p style="font-size:30px;">Roteiro {roteiro} | Carro {carro} | {int(total_paxs)} Paxs</p>\n\n')
+                file.write(f'<p style="font-size:30px;">Roteiro {roteiro_ref} | Carro {carro} | {int(total_paxs)} Paxs</p>\n\n')
 
                 file.write(html)
 
