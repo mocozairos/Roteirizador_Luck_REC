@@ -203,7 +203,7 @@ def definir_horario_primeiro_hotel(df, index):
 
     return data_hora_primeiro_hotel
         
-def verificar_combinacoes(df, max_hoteis, pax_max_ref, df_hoteis, intervalo_hoteis):
+def verificar_combinacoes(df, max_hoteis, pax_max, df_hoteis, intervalo_hoteis):
 
     for tamanho in range(2, max_hoteis+1):  # De 2 a 4 hotéis
         
@@ -217,7 +217,7 @@ def verificar_combinacoes(df, max_hoteis, pax_max_ref, df_hoteis, intervalo_hote
 
             # Verificar se a soma ultrapassa o valor estipulado
 
-            if soma_passageiros >= pax_max_ref and soma_passageiros<=pax_max:
+            if soma_passageiros >= int(0.9*pax_max) and soma_passageiros<=pax_max:
 
                 lista_combinacao = list(subset['Est Origem'])
 
@@ -2005,11 +2005,26 @@ def criar_output_html(nome_html, html):
 
         file.write(f'<p style="font-size:40px;">Roteiros</p>\n\n')
 
-def inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos):
+def inserir_roteiros_html(nome_html, df_pdf):
 
-    for roteiro in df_pdf['Roteiro'].unique().tolist():
+    roteiro = 0
 
-        df_ref_roteiro = df_pdf[df_pdf['Roteiro']==roteiro].reset_index(drop=True)
+    df_ref = df_pdf[['Roteiro', 'Carros', 'Horario Voo / Menor Horário']].drop_duplicates().reset_index(drop=True)
+
+    for index in range(len(df_ref)):
+
+        roteiro_ref = df_ref.at[index, 'Roteiro']
+
+        carro_ref = df_ref.at[index, 'Carros']
+
+        hv_ref = df_ref.at[index, 'Horario Voo / Menor Horário']
+
+        df_ref_roteiro = df_pdf[(df_pdf['Roteiro']==roteiro_ref) & (df_pdf['Carros']==carro_ref) & 
+                          (df_pdf['Horario Voo / Menor Horário']==hv_ref)].reset_index(drop=True)
+        
+        if carro_ref==1:
+
+            roteiro+=1
 
         for carro in df_ref_roteiro['Carros'].unique().tolist():
 
@@ -2028,28 +2043,6 @@ def inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos):
                 file.write(html)
 
                 file.write('\n\n')
-            
-        df_ref_roteiro_alt = df_roteiros_alternativos[df_roteiros_alternativos['Roteiro']==roteiro].reset_index(drop=True)
-
-        if len(df_ref_roteiro_alt)>0:
-
-            for carro in df_ref_roteiro_alt['Carros'].unique().tolist():
-
-                df_ref_carro_alt = df_ref_roteiro_alt[df_ref_roteiro_alt['Carros']==carro]\
-                    [['Roteiro', 'Carros', 'Modo do Servico', 'Voo', 'Horario Voo', 'Junção', 'Est Origem', 'Total ADT | CHD', 
-                    'Data Horario Apresentacao']].reset_index(drop=True)
-                
-                total_paxs = df_ref_carro_alt['Total ADT | CHD'].sum()
-                
-                html = definir_html(df_ref_carro)
-
-                with open(nome_html, "a", encoding="utf-8") as file:
-
-                    file.write(f'<p style="font-size:30px;">Opção Alternativa | Roteiro {roteiro} | Carro {carro} | {int(total_paxs)} Paxs</p>\n\n')
-
-                    file.write(html)
-
-                    file.write('\n\n')
 
 def verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, 
                                                     df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
@@ -4158,13 +4151,12 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
             df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos.columns.tolist())
 
-        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
-                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
 
         n_carros = 0
 
         for df in lista_dfs:
-
+            
             if len(df)>0:
 
                 n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
@@ -4192,9 +4184,19 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
         criar_output_html(st.session_state.nome_html, html)
 
-        df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max], ignore_index=True)
+        # Aqui
 
-        inserir_roteiros_html(st.session_state.nome_html, df_pdf, df_roteiros_alternativos)
+        df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
+                            df_roteiros_alternativos], ignore_index=True)
+
+        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
+            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+        df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
+
+        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
+
+        # Até Aqui
 
         with open(st.session_state.nome_html, "r", encoding="utf-8") as file:
 
@@ -4270,8 +4272,7 @@ elif 'nome_html_bv' in st.session_state and \
 
                 df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_bv.columns.tolist())
 
-            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
-                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
 
             n_carros = 0
     
@@ -4304,9 +4305,15 @@ elif 'nome_html_bv' in st.session_state and \
 
             criar_output_html(nome_html, html)
 
-            df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max], ignore_index=True)
+            df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
+                                df_roteiros_alternativos], ignore_index=True)
 
-            inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos)
+            df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
+                lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+            df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
+
+            inserir_roteiros_html(st.session_state.nome_html, df_pdf)
 
             with open(nome_html, "r", encoding="utf-8") as file:
 
@@ -4337,8 +4344,7 @@ elif 'nome_html_bv' in st.session_state and \
 
         nome_html = st.session_state.nome_html_bv
 
-        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
-                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
 
         n_carros = 0
 
@@ -4371,9 +4377,15 @@ elif 'nome_html_bv' in st.session_state and \
 
         criar_output_html(nome_html, html)
 
-        df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max], ignore_index=True)
+        df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
+                            df_roteiros_alternativos], ignore_index=True)
 
-        inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos)
+        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
+            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+        df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
+
+        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
 
         with open(nome_html, "r", encoding="utf-8") as file:
 
@@ -4431,8 +4443,7 @@ elif 'nome_html_bv' in st.session_state and \
 
                 df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_pd.columns.tolist())
             
-            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
-                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
 
             n_carros = 0
     
@@ -4465,9 +4476,15 @@ elif 'nome_html_bv' in st.session_state and \
 
             criar_output_html(nome_html, html)
 
-            df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max], ignore_index=True)
+            df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
+                                df_roteiros_alternativos], ignore_index=True)
 
-            inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos)
+            df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
+                lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+            df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
+
+            inserir_roteiros_html(st.session_state.nome_html, df_pdf)
 
             with open(nome_html, "r", encoding="utf-8") as file:
 
@@ -4498,8 +4515,7 @@ elif 'nome_html_bv' in st.session_state and \
 
         nome_html = st.session_state.nome_html_pd
 
-        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
-                     df_roteiros_apoios_alternativos, df_roteiros_alternativos]
+        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
 
         n_carros = 0
 
@@ -4532,9 +4548,15 @@ elif 'nome_html_bv' in st.session_state and \
 
         criar_output_html(nome_html, html)
 
-        df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max], ignore_index=True)
+        df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
+                            df_roteiros_alternativos], ignore_index=True)
 
-        inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos)
+        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
+            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+        df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
+
+        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
 
         with open(nome_html, "r", encoding="utf-8") as file:
 
