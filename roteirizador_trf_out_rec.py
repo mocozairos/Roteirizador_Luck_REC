@@ -145,7 +145,13 @@ def definir_horario_primeiro_hotel(df, index):
 
     data_voo = df.at[index, 'Data Voo']
 
-    juncao = df.at[index, 'Junção']
+    if 'Junção' in df.columns.tolist():
+
+        juncao = df.at[index, 'Junção']
+
+    else:
+
+        juncao = None
 
     modo = df.at[index, 'Modo do Servico']
 
@@ -221,7 +227,7 @@ def verificar_combinacoes(df, max_hoteis, pax_max_ref, df_hoteis, intervalo_hote
 
                 if len(df_lista_combinacao)>1:
 
-                    for index in range(len(df_lista_combinacao))-1:
+                    for index in range(len(df_lista_combinacao)-1):
     
                         intervalo_ref = definir_intervalo_ref(df_lista_combinacao, index+1, intervalo_hoteis)
     
@@ -411,11 +417,19 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                     juncao = df_hoteis_bus_com_juncao.at[index, 'Junção']
 
-                    pax_ref = df_hoteis_bus_com_juncao.at[index, 'Total ADT | CHD']
+                    if pax_max > 30:
 
-                    df_ref = df_servicos[(df_servicos['Bus']=='X') & (df_servicos['Junção']==juncao) & (df_servicos['Modo do Servico']=='REGULAR')]\
-                        .groupby('Est Origem').agg({'Total ADT | CHD': 'sum', 'Sequência': 'first'}).sort_values(by='Sequência', ascending=False)\
-                            .reset_index()
+                        mask_servicos = (df_servicos['Bus']=='X') & (df_servicos['Junção']==juncao) & \
+                            (df_servicos['Modo do Servico']=='REGULAR')
+                        
+                    else:
+
+                        mask_servicos = (df_servicos['Micro']=='X') & (df_servicos['Junção']==juncao) & \
+                            (df_servicos['Modo do Servico']=='REGULAR')
+                        
+                    df_ref = df_servicos[mask_servicos].groupby('Est Origem')\
+                                                .agg({'Total ADT | CHD': 'sum', 'Sequência': 'first'})\
+                                                    .sort_values(by='Sequência', ascending=False).reset_index()
 
                     lista_combinacao = verificar_combinacoes(df_ref, max_hoteis, int(0.9*pax_max), df_hoteis, intervalo_hoteis)
 
@@ -425,13 +439,10 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                         roteiro+=1
 
-                        st.warning(f'Os hoteis {lista_combinacao} da junção {juncao} tem {pax_ref} paxs e, portanto vão ser roteirizados em um ônibus')
-
-                        df_ref_2 = df_servicos[(df_servicos['Bus']=='X') & (df_servicos['Junção']==juncao) & (df_servicos['Modo do Servico']=='REGULAR') & 
-                                            (df_servicos['Est Origem'].isin(lista_combinacao))].reset_index()
+                        df_ref_2 = df_servicos[mask_servicos & (df_servicos['Est Origem'].isin(lista_combinacao))].reset_index()
                         
                         df_ref_2_group = df_ref_2.groupby('Est Origem')[['Data Horario Apresentacao', 'Menor Horário', 'Servico', 'Data Voo', 'Junção', 
-                                                                            'Modo do Servico', 'Horario Voo', 'Sequência']].first()\
+                                                                            'Modo do Servico', 'Horario Voo', 'Sequência', 'Região']].first()\
                                                                             .sort_values(by='Sequência', ascending=False).reset_index()
 
                         for index in range(len(df_ref_2_group)):
@@ -473,15 +484,21 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                     voo_ref = df_hoteis_bus_sem_juncao.at[index, 'Voo']
 
-                    pax_ref = df_hoteis_bus_sem_juncao.at[index, 'Total ADT | CHD']
+                    if pax_max > 30:
 
-                    df_ref = df_servicos[(df_servicos['Bus']=='X') & (df_servicos['Voo']==voo_ref) & (df_servicos['Modo do Servico']=='REGULAR')]\
-                        .groupby('Est Origem').agg({'Total ADT | CHD': 'sum', 'Sequência': 'first'}).sort_values(by='Sequência', ascending=False)\
-                            .reset_index()
+                        mask_servicos = (df_servicos['Bus']=='X') & (df_servicos['Voo']==voo_ref) & \
+                            (df_servicos['Modo do Servico']=='REGULAR')
+                        
+                    else:
+
+                        mask_servicos = (df_servicos['Micro']=='X') & (df_servicos['Voo']==voo_ref) & \
+                            (df_servicos['Modo do Servico']=='REGULAR')
+                        
+                    df_ref = df_servicos[mask_servicos].groupby('Est Origem')\
+                                                .agg({'Total ADT | CHD': 'sum', 'Sequência': 'first'})\
+                                                    .sort_values(by='Sequência', ascending=False).reset_index()
 
                     lista_combinacao = verificar_combinacoes(df_ref, max_hoteis, int(0.9*pax_max), df_hoteis, intervalo_hoteis)
-
-                    st.warning(f'Os hoteis {lista_combinacao} do voo {voo_ref} tem {pax_ref} paxs e, portanto vão ser roteirizados em um ônibus')
 
                     if lista_combinacao is not None:
 
@@ -489,18 +506,19 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                         roteiro+=1
 
-                        df_ref_2 = df_servicos[(df_servicos['Bus']=='X') & (df_servicos['Voo']==voo_ref) & (df_servicos['Modo do Servico']=='REGULAR') & 
-                                            (df_servicos['Est Origem'].isin(lista_combinacao))].reset_index()
+                        df_ref_2 = df_servicos[mask_servicos & (df_servicos['Est Origem'].isin(lista_combinacao))].reset_index()
                         
-                        df_ref_2_group = df_ref_2.groupby('Est Origem')[['Data Horario Apresentacao', 'Menor Horário', 'Servico', 'Data Voo', 'Voo', 
-                                                                        'Modo do Servico', 'Horario Voo', 'Sequência']].first()\
+                        df_ref_2_group = df_ref_2.groupby('Est Origem')[['Data Horario Apresentacao', 'Menor Horário', 'Servico', 
+                                                                         'Data Voo', 'Voo', 'Modo do Servico', 'Horario Voo', 
+                                                                         'Sequência', 'Região']].first()\
                                                                             .sort_values(by='Sequência', ascending=False).reset_index()
 
                         for index in range(len(df_ref_2_group)):
 
                             if index==0:
 
-                                df_ref_2_group.at[index, 'Data Horario Apresentacao'] = definir_horario_primeiro_hotel(df_ref_2_group, index)
+                                df_ref_2_group.at[index, 'Data Horario Apresentacao'] = \
+                                    definir_horario_primeiro_hotel(df_ref_2_group, index)
 
                             else:
 
@@ -2513,6 +2531,10 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
         df_voos_pax_max_pd = pd.DataFrame()
 
+        df_router_filtrado_bv_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_bv_2['Horario Voo'], format='%H:%M:%S').dt.time
+
+        df_router_filtrado_pd_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_pd_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         if robo_usado=='Gerald':
 
             df_router_filtrado_bv_2, roteiro, df_juncoes_pax_max_bv, df_voos_pax_max_bv = \
@@ -2525,9 +2547,7 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
                                                    st.session_state.df_hoteis_piedade, intervalo_hoteis, df_juncoes_pax_max_pd, 
                                                    df_voos_pax_max_pd)
 
-        df_router_filtrado_bv_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_bv_2['Horario Voo'], format='%H:%M:%S').dt.time
-
-        df_router_filtrado_pd_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_pd_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação Boa Viagem
 
@@ -2787,6 +2807,8 @@ elif roteirizar and servico_roteiro=='OUT (MILAGRES)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -2796,7 +2818,7 @@ elif roteirizar and servico_roteiro=='OUT (MILAGRES)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -2907,6 +2929,8 @@ elif roteirizar and servico_roteiro=='OUT (MACEIÓ-AL)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -2916,7 +2940,7 @@ elif roteirizar and servico_roteiro=='OUT (MACEIÓ-AL)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3027,6 +3051,8 @@ elif roteirizar and servico_roteiro=='OUT (ALAGOAS)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3036,7 +3062,7 @@ elif roteirizar and servico_roteiro=='OUT (ALAGOAS)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3147,6 +3173,8 @@ elif roteirizar and servico_roteiro=='OUT RECIFE (CENTRO)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3156,7 +3184,7 @@ elif roteirizar and servico_roteiro=='OUT RECIFE (CENTRO)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3267,6 +3295,8 @@ elif roteirizar and servico_roteiro=='OUT (JOÃO PESSOA-PB)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3276,7 +3306,7 @@ elif roteirizar and servico_roteiro=='OUT (JOÃO PESSOA-PB)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3387,6 +3417,8 @@ elif roteirizar and servico_roteiro=='OUT (CARNEIROS I TAMANDARÉ)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3396,7 +3428,7 @@ elif roteirizar and servico_roteiro=='OUT (CARNEIROS I TAMANDARÉ)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3507,6 +3539,8 @@ elif roteirizar and servico_roteiro=='OUT (FAZENDA NOVA)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3516,7 +3550,7 @@ elif roteirizar and servico_roteiro=='OUT (FAZENDA NOVA)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3627,6 +3661,8 @@ elif roteirizar and servico_roteiro=='OUT (OLINDA)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3636,7 +3672,7 @@ elif roteirizar and servico_roteiro=='OUT (OLINDA)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3747,6 +3783,8 @@ elif roteirizar and servico_roteiro=='OUT (MARAGOGI | JAPARATINGA)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3756,7 +3794,7 @@ elif roteirizar and servico_roteiro=='OUT (MARAGOGI | JAPARATINGA)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3867,6 +3905,8 @@ elif roteirizar and servico_roteiro=='OUT (CABO DE STO AGOSTINHO)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3876,7 +3916,7 @@ elif roteirizar and servico_roteiro=='OUT (CABO DE STO AGOSTINHO)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
@@ -3988,6 +4028,8 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
         df_voos_pax_max = pd.DataFrame()
 
+        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+
         # Roteirizando com gerald os carros maiores especificados
 
         if robo_usado=='Gerald':
@@ -3997,7 +4039,7 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
                                                    df_hoteis_ref, intervalo_hoteis, df_juncoes_pax_max, 
                                                    df_voos_pax_max)
 
-        df_router_filtrado_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_2['Horario Voo'], format='%H:%M:%S').dt.time
+        
 
         # Gerando horários de apresentação
 
