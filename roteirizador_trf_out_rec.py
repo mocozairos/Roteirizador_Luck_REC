@@ -2724,6 +2724,8 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
         df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
             lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
 
+        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
         inserir_roteiros_html(st.session_state.nome_html_bv, df_pdf)
@@ -2749,6 +2751,8 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
         df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
             lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
@@ -4214,6 +4218,8 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
         df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
             lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
 
+        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
         inserir_roteiros_html(st.session_state.nome_html, df_pdf)
@@ -4333,6 +4339,8 @@ elif 'nome_html_bv' in st.session_state and \
             df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
                 lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
 
+            df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+
             df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
             inserir_roteiros_html(nome_html, df_pdf)
@@ -4404,6 +4412,8 @@ elif 'nome_html_bv' in st.session_state and \
 
         df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
             lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
@@ -4504,6 +4514,8 @@ elif 'nome_html_bv' in st.session_state and \
             df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
                 lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
 
+            df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+
             df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
             inserir_roteiros_html(nome_html, df_pdf)
@@ -4575,6 +4587,8 @@ elif 'nome_html_bv' in st.session_state and \
 
         df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
             lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
