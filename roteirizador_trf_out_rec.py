@@ -396,16 +396,30 @@ def definir_intervalo_ref(df, value, intervalo_hoteis):
 
 def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max, df_hoteis, intervalo_hoteis, df_juncoes_pax_max, 
                                        df_voos_pax_max):
+    
+    if pax_max > 30:
+
+        mask_servicos_com_juncao = (df_servicos['Bus']=='X') & (~pd.isna(df_servicos['Junção'])) & \
+            (df_servicos['Modo do Servico']=='REGULAR')
+        
+        mask_servicos_sem_juncao = (df_servicos['Bus']=='X') & (pd.isna(df_servicos['Junção'])) & \
+                            (df_servicos['Modo do Servico']=='REGULAR')
+        
+    else:
+
+        mask_servicos_com_juncao = (df_servicos['Micro']=='X') & (~pd.isna(df_servicos['Junção'])) & \
+            (df_servicos['Modo do Servico']=='REGULAR')
+        
+        mask_servicos_sem_juncao = (df_servicos['Micro']=='X') & (pd.isna(df_servicos['Junção'])) & \
+                            (df_servicos['Modo do Servico']=='REGULAR')
 
     while True:
 
-        df_hoteis_bus_sem_juncao = df_servicos[(df_servicos['Bus']=='X') & (pd.isna(df_servicos['Junção'])) & 
-                                            (df_servicos['Modo do Servico']=='REGULAR')].groupby('Voo').agg({'Total ADT | CHD': 'sum'}).reset_index()
+        df_hoteis_bus_sem_juncao = df_servicos[mask_servicos_sem_juncao].groupby('Voo').agg({'Total ADT | CHD': 'sum'}).reset_index()
         
         df_hoteis_bus_sem_juncao = df_hoteis_bus_sem_juncao[df_hoteis_bus_sem_juncao['Total ADT | CHD']>=int(0.9*pax_max)].reset_index(drop=True)
         
-        df_hoteis_bus_com_juncao = df_servicos[(df_servicos['Bus']=='X') & (~pd.isna(df_servicos['Junção'])) & 
-                                            (df_servicos['Modo do Servico']=='REGULAR')].groupby('Junção').agg({'Total ADT | CHD': 'sum'}).reset_index()
+        df_hoteis_bus_com_juncao = df_servicos[mask_servicos_com_juncao].groupby('Junção').agg({'Total ADT | CHD': 'sum'}).reset_index()
 
         df_hoteis_bus_com_juncao = df_hoteis_bus_com_juncao[df_hoteis_bus_com_juncao['Total ADT | CHD']>=int(0.9*pax_max)].reset_index(drop=True)
 
@@ -469,9 +483,9 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                             df_servicos = df_servicos.drop(index=df_ref_2.at[index, 'index'])
 
-                            df_juncoes_pax_max.at[index, 'Roteiro']=roteiro
+                            df_juncoes_pax_max.at[len(df_juncoes_pax_max)-1, 'Roteiro']=roteiro
 
-                            df_juncoes_pax_max.at[index, 'Carros']=carro
+                            df_juncoes_pax_max.at[len(df_juncoes_pax_max)-1, 'Carros']=carro
 
                     else:
 
@@ -538,9 +552,9 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                             df_servicos = df_servicos.drop(index=df_ref_2.at[index, 'index'])
 
-                            df_voos_pax_max.at[index, 'Roteiro']=roteiro
+                            df_voos_pax_max.at[len(df_juncoes_pax_max)-1, 'Roteiro']=roteiro
 
-                            df_voos_pax_max.at[index, 'Carros']=carro
+                            df_voos_pax_max.at[len(df_juncoes_pax_max)-1, 'Carros']=carro
 
                     else:
 
