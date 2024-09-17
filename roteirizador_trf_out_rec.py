@@ -215,11 +215,7 @@ def verificar_combinacoes(df, max_hoteis, pax_max_ref, df_hoteis, intervalo_hote
 
                 lista_combinacao = list(subset['Est Origem'])
 
-                df_lista_combinacao = pd.DataFrame(lista_combinacao, columns=['Est. Origem'])
-
-                # Aqui
-
-                st.dataframe(df_lista_combinacao)
+                df_lista_combinacao = pd.DataFrame(lista_combinacao, columns=['Est Origem'])
 
                 df_lista_combinacao = pd.merge(df_lista_combinacao, df_hoteis, on='Est Origem', how='left')
 
