@@ -2726,7 +2726,7 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
-        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
+        inserir_roteiros_html(st.session_state.nome_html_bv, df_pdf)
 
         with open(st.session_state.nome_html_bv, "r", encoding="utf-8") as file:
 
@@ -2752,7 +2752,7 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
-        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
+        inserir_roteiros_html(st.session_state.nome_html_pd, df_pdf)
 
         with open(st.session_state.nome_html_pd, "r", encoding="utf-8") as file:
 
@@ -4335,7 +4335,7 @@ elif 'nome_html_bv' in st.session_state and \
 
             df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
-            inserir_roteiros_html(st.session_state.nome_html, df_pdf)
+            inserir_roteiros_html(nome_html, df_pdf)
 
             with open(nome_html, "r", encoding="utf-8") as file:
 
@@ -4407,7 +4407,7 @@ elif 'nome_html_bv' in st.session_state and \
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
-        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
+        inserir_roteiros_html(nome_html, df_pdf)
 
         with open(nome_html, "r", encoding="utf-8") as file:
 
@@ -4506,7 +4506,7 @@ elif 'nome_html_bv' in st.session_state and \
 
             df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
-            inserir_roteiros_html(st.session_state.nome_html, df_pdf)
+            inserir_roteiros_html(nome_html, df_pdf)
 
             with open(nome_html, "r", encoding="utf-8") as file:
 
@@ -4578,7 +4578,7 @@ elif 'nome_html_bv' in st.session_state and \
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
-        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
+        inserir_roteiros_html(nome_html, df_pdf)
 
         with open(nome_html, "r", encoding="utf-8") as file:
 
