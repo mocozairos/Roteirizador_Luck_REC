@@ -2538,10 +2538,6 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
         df_voos_pax_max_pd = pd.DataFrame()
 
-        df_router_filtrado_bv_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_bv_2['Horario Voo'], format='%H:%M:%S').dt.time
-
-        df_router_filtrado_pd_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_pd_2['Horario Voo'], format='%H:%M:%S').dt.time
-
         if robo_usado=='Gerald':
 
             df_router_filtrado_bv_2, roteiro, df_juncoes_pax_max_bv, df_voos_pax_max_bv = \
@@ -2554,7 +2550,9 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
                                                    st.session_state.df_hoteis_piedade, intervalo_hoteis, df_juncoes_pax_max_pd, 
                                                    df_voos_pax_max_pd)
 
-        
+        df_router_filtrado_bv_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_bv_2['Horario Voo'], format='%H:%M:%S').dt.time
+
+        df_router_filtrado_pd_2['Horario Voo'] = pd.to_datetime(df_router_filtrado_pd_2['Horario Voo'], format='%H:%M:%S').dt.time
 
         # Gerando horários de apresentação Boa Viagem
 
@@ -2671,9 +2669,7 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
     if len(df_roteiros_alternativos_bv)==0 and len(df_roteiros_alternativos_pd)==0:
 
         lista_dfs = [df_hoteis_pax_max_bv, df_juncoes_pax_max_bv, df_voos_pax_max_bv, df_router_filtrado_bv_2, df_roteiros_apoios_bv, 
-                     df_roteiros_apoios_alternativos_bv, df_roteiros_alternativos_bv, df_hoteis_pax_max_pd, df_juncoes_pax_max_pd, 
-                     df_voos_pax_max_pd, df_router_filtrado_pd_2, df_roteiros_apoios_pd, df_roteiros_apoios_alternativos_pd, 
-                     df_roteiros_alternativos_pd]
+                     df_hoteis_pax_max_pd, df_juncoes_pax_max_pd, df_voos_pax_max_pd, df_router_filtrado_pd_2, df_roteiros_apoios_pd]
 
         n_carros = 0
 
@@ -2722,9 +2718,15 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
         criar_output_html(st.session_state.nome_html_bv, html)
 
-        df_pdf = pd.concat([df_router_filtrado_bv_2, df_hoteis_pax_max_bv], ignore_index=True)
+        df_pdf = pd.concat([df_router_filtrado_bv_2, df_hoteis_pax_max_bv, df_juncoes_pax_max_bv, df_voos_pax_max_bv, 
+                            df_roteiros_alternativos_bv], ignore_index=True)
 
-        inserir_roteiros_html(st.session_state.nome_html_bv, df_pdf, df_roteiros_alternativos_bv)
+        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
+            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+        df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
+
+        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
 
         with open(st.session_state.nome_html_bv, "r", encoding="utf-8") as file:
 
@@ -2742,9 +2744,15 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
 
         criar_output_html(st.session_state.nome_html_pd, html)
 
-        df_pdf = pd.concat([df_router_filtrado_pd_2, df_hoteis_pax_max_pd], ignore_index=True)
+        df_pdf = pd.concat([df_router_filtrado_pd_2, df_hoteis_pax_max_pd, df_juncoes_pax_max_pd, df_voos_pax_max_pd, 
+                            df_roteiros_alternativos_pd], ignore_index=True)
 
-        inserir_roteiros_html(st.session_state.nome_html_pd, df_pdf, df_roteiros_alternativos_pd)
+        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
+            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+
+        df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
+
+        inserir_roteiros_html(st.session_state.nome_html, df_pdf)
 
         with open(st.session_state.nome_html_pd, "r", encoding="utf-8") as file:
 
