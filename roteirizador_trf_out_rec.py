@@ -200,9 +200,13 @@ def definir_horario_primeiro_hotel(df, index):
 def verificar_combinacoes(df, max_hoteis, pax_max_ref, df_hoteis, intervalo_hoteis):
 
     for tamanho in range(2, max_hoteis+1):  # De 2 a 4 hotéis
+        
         for i in range(len(df) - tamanho + 1):
+            
             # Selecionar a combinação de 'tamanho' hotéis consecutivos
+            
             subset = df.iloc[i:i+tamanho]
+            
             soma_passageiros = subset['Total ADT | CHD'].sum()
 
             # Verificar se a soma ultrapassa o valor estipulado
@@ -211,7 +215,7 @@ def verificar_combinacoes(df, max_hoteis, pax_max_ref, df_hoteis, intervalo_hote
 
                 lista_combinacao = list(subset['Est Origem'])
 
-                df_lista_combinacao = pd.DataFrame(lista_combinacao, columns='Est. Origem')
+                df_lista_combinacao = pd.DataFrame(lista_combinacao, columns=['Est. Origem'])
 
                 df_lista_combinacao = pd.merge(df_lista_combinacao, df_hoteis, on='Est Origem', how='left')
 
@@ -466,8 +470,6 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
                 for index in range(len(df_hoteis_bus_sem_juncao)):
 
                     voo_ref = df_hoteis_bus_sem_juncao.at[index, 'Voo']
-
-                    st.write(voo_ref)
 
                     pax_ref = df_hoteis_bus_sem_juncao.at[index, 'Total ADT | CHD']
 
