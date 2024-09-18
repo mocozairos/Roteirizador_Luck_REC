@@ -1333,7 +1333,7 @@ def plotar_roteiros_gerais_alternativos(df_servicos, df_apoios, df_alternativos,
 
     return coluna
 
-def gerar_roteiros_alternativos(df_servicos):
+def gerar_roteiros_alternativos(df_servicos, max_hoteis_ref):
 
     df_roteiros_alternativos = pd.DataFrame(columns=df_servicos.columns.tolist())
 
@@ -1355,142 +1355,144 @@ def gerar_roteiros_alternativos(df_servicos):
 
             max_hoteis = divisao_inteira + 1
 
-        carros = 1
+        if max_hoteis!=max_hoteis_ref:
 
-        paxs_total_roteiro = 0
-
-        contador_hoteis = 0
-
-        bairro = ''
-
-        for index in range(len(df_ref)):
-
-            # Se for o primeiro hotel do voo, define o horário inicial, colhe o horário do hotel e inicia somatório de paxs do roteiro
-
-            if index==0:
-
-                df_ref.at[index, 'Data Horario Apresentacao']=definir_horario_primeiro_hotel(df_ref, index)
-                
-                data_horario_primeiro_hotel = df_ref.at[index, 'Data Horario Apresentacao']
-                
-                paxs_hotel = df_ref[df_ref['Est Origem']==df_ref.at[index, 'Est Origem']]['Total ADT | CHD'].sum()
-
-                paxs_total_roteiro+=paxs_hotel
-
-                df_ref = preencher_roteiro_carros(df_ref, item, carros, index)
-
-                contador_hoteis+=1
-
-            # Se não for a primeira linha do voo, mas o hotel for igual o hotel anterior, só repete o horário de apresentação
-
-            elif df_ref.at[index, 'Est Origem']==df_ref.at[index-1, 'Est Origem']:
-
-                df_ref.at[index, 'Data Horario Apresentacao']=df_ref.at[index-1, 'Data Horario Apresentacao']
-
-                df_ref = preencher_roteiro_carros(df_ref, item, carros, index)
-
-            # Se não for a primeira linha do voo e o hotel não for igual ao anterior
-
-            else:
-
-                # Colhe a quantidade de paxs do hotel anterior, o bairro do hotel atual, a quantidade de paxs do hotel atual 
-                # e verifica se estoura a capacidade máxima de um carro
-
-                contador_hoteis+=1
-
-                if contador_hoteis>max_hoteis:
-
-                    carros+=1
-
+            carros = 1
+    
+            paxs_total_roteiro = 0
+    
+            contador_hoteis = 0
+    
+            bairro = ''
+    
+            for index in range(len(df_ref)):
+    
+                # Se for o primeiro hotel do voo, define o horário inicial, colhe o horário do hotel e inicia somatório de paxs do roteiro
+    
+                if index==0:
+    
                     df_ref.at[index, 'Data Horario Apresentacao']=definir_horario_primeiro_hotel(df_ref, index)
                     
-                    paxs_hotel = df_ref[df_ref['Est Origem']==df_ref.at[index, 'Est Origem']]['Total ADT | CHD'].sum()
-
                     data_horario_primeiro_hotel = df_ref.at[index, 'Data Horario Apresentacao']
-
-                    paxs_total_roteiro = 0
-
-                    bairro = ''
-
-                    paxs_total_roteiro+=paxs_hotel
-
-                    df_ref.at[index, 'Roteiro'] = item
-
-                    df_ref.at[index, 'Carros'] = carros
                     
-                    contador_hoteis = 1
-                    
-                else:
-
-                    bairro=df_ref.at[index, 'Região']
-
                     paxs_hotel = df_ref[df_ref['Est Origem']==df_ref.at[index, 'Est Origem']]['Total ADT | CHD'].sum()
-
-                    # Se estourar a capacidade do carro, aí trata como se fosse o primeiro hotel e adiciona 1 na variável carros
-                    # pra, no final, eu saber quantos carros foram usados nesse roteiro e poder dividir 'igualmente' a quantidade de hoteis
-
-                    if paxs_total_roteiro+paxs_hotel>pax_max:
-
+    
+                    paxs_total_roteiro+=paxs_hotel
+    
+                    df_ref = preencher_roteiro_carros(df_ref, item, carros, index)
+    
+                    contador_hoteis+=1
+    
+                # Se não for a primeira linha do voo, mas o hotel for igual o hotel anterior, só repete o horário de apresentação
+    
+                elif df_ref.at[index, 'Est Origem']==df_ref.at[index-1, 'Est Origem']:
+    
+                    df_ref.at[index, 'Data Horario Apresentacao']=df_ref.at[index-1, 'Data Horario Apresentacao']
+    
+                    df_ref = preencher_roteiro_carros(df_ref, item, carros, index)
+    
+                # Se não for a primeira linha do voo e o hotel não for igual ao anterior
+    
+                else:
+    
+                    # Colhe a quantidade de paxs do hotel anterior, o bairro do hotel atual, a quantidade de paxs do hotel atual 
+                    # e verifica se estoura a capacidade máxima de um carro
+    
+                    contador_hoteis+=1
+    
+                    if contador_hoteis>max_hoteis:
+    
                         carros+=1
-
+    
                         df_ref.at[index, 'Data Horario Apresentacao']=definir_horario_primeiro_hotel(df_ref, index)
-
+                        
+                        paxs_hotel = df_ref[df_ref['Est Origem']==df_ref.at[index, 'Est Origem']]['Total ADT | CHD'].sum()
+    
                         data_horario_primeiro_hotel = df_ref.at[index, 'Data Horario Apresentacao']
-
+    
                         paxs_total_roteiro = 0
-
+    
                         bairro = ''
-
+    
                         paxs_total_roteiro+=paxs_hotel
-
+    
                         df_ref.at[index, 'Roteiro'] = item
-
+    
                         df_ref.at[index, 'Carros'] = carros
                         
                         contador_hoteis = 1
-
-                    # Se não estourar a capacidade máxima
-
+                        
                     else:
-
-                        paxs_total_roteiro+=paxs_hotel
-
-                        # Sempre que inicia um carro, o bairro fica vazio. Portanto, se não for o primeiro hotel do carro, vai definir a variavel
-                        # intervalo_ref pra o robô saber quantos minutos deve adicionar até o próximo horário de apresentação
-
-                        if bairro!='':
-
-                            intervalo_ref = definir_intervalo_ref(df_ref, index, intervalo_hoteis)
-
-                        data_horario_hotel = df_ref.at[index-1, 'Data Horario Apresentacao']-intervalo_ref
-
-                        if data_horario_primeiro_hotel - data_horario_hotel>intervalo_pu_hotel:
-
+    
+                        bairro=df_ref.at[index, 'Região']
+    
+                        paxs_hotel = df_ref[df_ref['Est Origem']==df_ref.at[index, 'Est Origem']]['Total ADT | CHD'].sum()
+    
+                        # Se estourar a capacidade do carro, aí trata como se fosse o primeiro hotel e adiciona 1 na variável carros
+                        # pra, no final, eu saber quantos carros foram usados nesse roteiro e poder dividir 'igualmente' a quantidade de hoteis
+    
+                        if paxs_total_roteiro+paxs_hotel>pax_max:
+    
                             carros+=1
-
+    
                             df_ref.at[index, 'Data Horario Apresentacao']=definir_horario_primeiro_hotel(df_ref, index)
-
+    
                             data_horario_primeiro_hotel = df_ref.at[index, 'Data Horario Apresentacao']
-
+    
                             paxs_total_roteiro = 0
-
+    
                             bairro = ''
-
+    
                             paxs_total_roteiro+=paxs_hotel
-
+    
                             df_ref.at[index, 'Roteiro'] = item
-
+    
                             df_ref.at[index, 'Carros'] = carros
                             
                             contador_hoteis = 1
-
+    
+                        # Se não estourar a capacidade máxima
+    
                         else:
-
-                            df_ref.at[index, 'Data Horario Apresentacao']=data_horario_hotel
-
-                            df_ref = preencher_roteiro_carros(df_ref, item, carros, index)
-
-        df_roteiros_alternativos = pd.concat([df_roteiros_alternativos, df_ref], ignore_index=True)
+    
+                            paxs_total_roteiro+=paxs_hotel
+    
+                            # Sempre que inicia um carro, o bairro fica vazio. Portanto, se não for o primeiro hotel do carro, vai definir a variavel
+                            # intervalo_ref pra o robô saber quantos minutos deve adicionar até o próximo horário de apresentação
+    
+                            if bairro!='':
+    
+                                intervalo_ref = definir_intervalo_ref(df_ref, index, intervalo_hoteis)
+    
+                            data_horario_hotel = df_ref.at[index-1, 'Data Horario Apresentacao']-intervalo_ref
+    
+                            if data_horario_primeiro_hotel - data_horario_hotel>intervalo_pu_hotel:
+    
+                                carros+=1
+    
+                                df_ref.at[index, 'Data Horario Apresentacao']=definir_horario_primeiro_hotel(df_ref, index)
+    
+                                data_horario_primeiro_hotel = df_ref.at[index, 'Data Horario Apresentacao']
+    
+                                paxs_total_roteiro = 0
+    
+                                bairro = ''
+    
+                                paxs_total_roteiro+=paxs_hotel
+    
+                                df_ref.at[index, 'Roteiro'] = item
+    
+                                df_ref.at[index, 'Carros'] = carros
+                                
+                                contador_hoteis = 1
+    
+                            else:
+    
+                                df_ref.at[index, 'Data Horario Apresentacao']=data_horario_hotel
+    
+                                df_ref = preencher_roteiro_carros(df_ref, item, carros, index)
+    
+            df_roteiros_alternativos = pd.concat([df_roteiros_alternativos, df_ref], ignore_index=True)
 
     return df_roteiros_alternativos
 
@@ -2567,11 +2569,11 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
         
     # Gerando roteiros alternativos Boa Viagem
 
-    df_roteiros_alternativos_bv = gerar_roteiros_alternativos(df_router_filtrado_bv_2)
+    df_roteiros_alternativos_bv = gerar_roteiros_alternativos(df_router_filtrado_bv_2, max_hoteis)
 
     # Gerando roteiros alternativos Piedade
 
-    df_roteiros_alternativos_pd = gerar_roteiros_alternativos(df_router_filtrado_pd_2)
+    df_roteiros_alternativos_pd = gerar_roteiros_alternativos(df_router_filtrado_pd_2, max_hoteis)
 
 
 
@@ -2866,7 +2868,7 @@ elif roteirizar and servico_roteiro=='OUT (MILAGRES)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -2988,7 +2990,7 @@ elif roteirizar and servico_roteiro=='OUT (MACEIÓ-AL)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -3110,7 +3112,7 @@ elif roteirizar and servico_roteiro=='OUT (ALAGOAS)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -3232,7 +3234,7 @@ elif roteirizar and servico_roteiro=='OUT RECIFE (CENTRO)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -3354,7 +3356,7 @@ elif roteirizar and servico_roteiro=='OUT (JOÃO PESSOA-PB)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -3476,7 +3478,7 @@ elif roteirizar and servico_roteiro=='OUT (CARNEIROS I TAMANDARÉ)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -3598,7 +3600,7 @@ elif roteirizar and servico_roteiro=='OUT (FAZENDA NOVA)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -3720,7 +3722,7 @@ elif roteirizar and servico_roteiro=='OUT (OLINDA)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -3842,7 +3844,7 @@ elif roteirizar and servico_roteiro=='OUT (MARAGOGI | JAPARATINGA)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -3964,7 +3966,7 @@ elif roteirizar and servico_roteiro=='OUT (CABO DE STO AGOSTINHO)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -4087,7 +4089,7 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
     # Gerando roteiros alternativos
 
-    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2)
+    df_roteiros_alternativos = gerar_roteiros_alternativos(df_router_filtrado_2, max_hoteis)
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
