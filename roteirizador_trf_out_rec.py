@@ -455,15 +455,14 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                         df_ref_2 = df_servicos[mask_servicos & (df_servicos['Est Origem'].isin(lista_combinacao))].reset_index()
                         
-                        df_ref_2_group = df_ref_2.groupby('Est Origem')[['Data Horario Apresentacao', 'Menor Horário', 'Servico', 'Data Voo', 'Junção', 
-                                                                            'Modo do Servico', 'Horario Voo', 'Sequência', 'Região']].first()\
-                                                                            .sort_values(by='Sequência', ascending=False).reset_index()
+                        df_ref_2_group = df_ref_2.groupby('Est Origem').first().sort_values(by='Sequência', ascending=False).reset_index()
 
                         for index in range(len(df_ref_2_group)):
 
                             if index==0:
 
-                                df_ref_2_group.at[index, 'Data Horario Apresentacao'] = definir_horario_primeiro_hotel(df_ref_2_group, index)
+                                df_ref_2_group.at[index, 'Data Horario Apresentacao'] = \
+                                definir_horario_primeiro_hotel(df_ref_2_group, index)
 
                             else:
 
@@ -522,10 +521,8 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                         df_ref_2 = df_servicos[mask_servicos & (df_servicos['Est Origem'].isin(lista_combinacao))].reset_index()
                         
-                        df_ref_2_group = df_ref_2.groupby('Est Origem')[['Data Horario Apresentacao', 'Menor Horário', 'Servico', 
-                                                                         'Data Voo', 'Voo', 'Modo do Servico', 'Horario Voo', 
-                                                                         'Sequência', 'Região']].first()\
-                                                                            .sort_values(by='Sequência', ascending=False).reset_index()
+                        df_ref_2_group = df_ref_2.groupby('Est Origem').first().sort_values(by='Sequência', ascending=False)\
+                        .reset_index()
 
                         for index in range(len(df_ref_2_group)):
 
