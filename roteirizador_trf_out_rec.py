@@ -2719,10 +2719,19 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
         df_pdf = pd.concat([df_router_filtrado_bv_2, df_hoteis_pax_max_bv, df_juncoes_pax_max_bv, df_voos_pax_max_bv, 
                             df_roteiros_alternativos_bv], ignore_index=True)
 
-        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
-            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+        for index in range(len(df_pdf)):
 
-        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+            tipo_de_servico_ref = df_pdf.at[index, 'Modo do Servico']
+
+            juncao_ref_2 = df_pdf.at[index, 'Junção']
+
+            if tipo_de_servico_ref == 'REGULAR' and not pd.isna(juncao_ref_2):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Menor Horário']
+
+            elif (tipo_de_servico_ref == 'REGULAR' and pd.isna(juncao_ref_2)) or (tipo_de_servico_ref != 'REGULAR'):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Horario Voo']
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
@@ -2747,10 +2756,19 @@ if roteirizar and servico_roteiro=='OUT (BOA VIAGEM | PIEDADE)':
         df_pdf = pd.concat([df_router_filtrado_pd_2, df_hoteis_pax_max_pd, df_juncoes_pax_max_pd, df_voos_pax_max_pd, 
                             df_roteiros_alternativos_pd], ignore_index=True)
 
-        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
-            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+        for index in range(len(df_pdf)):
 
-        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+            tipo_de_servico_ref = df_pdf.at[index, 'Modo do Servico']
+
+            juncao_ref_2 = df_pdf.at[index, 'Junção']
+
+            if tipo_de_servico_ref == 'REGULAR' and not pd.isna(juncao_ref_2):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Menor Horário']
+
+            elif (tipo_de_servico_ref == 'REGULAR' and pd.isna(juncao_ref_2)) or (tipo_de_servico_ref != 'REGULAR'):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Horario Voo']
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
@@ -4213,10 +4231,19 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
         df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
                             df_roteiros_alternativos], ignore_index=True)
 
-        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
-            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+        for index in range(len(df_pdf)):
 
-        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+            tipo_de_servico_ref = df_pdf.at[index, 'Modo do Servico']
+
+            juncao_ref_2 = df_pdf.at[index, 'Junção']
+
+            if tipo_de_servico_ref == 'REGULAR' and not pd.isna(juncao_ref_2):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Menor Horário']
+
+            elif (tipo_de_servico_ref == 'REGULAR' and pd.isna(juncao_ref_2)) or (tipo_de_servico_ref != 'REGULAR'):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Horario Voo']
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
@@ -4334,10 +4361,19 @@ elif 'nome_html_bv' in st.session_state and \
             df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
                                 df_roteiros_alternativos], ignore_index=True)
 
-            df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
-                lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+            for index in range(len(df_pdf)):
 
-            df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+                tipo_de_servico_ref = df_pdf.at[index, 'Modo do Servico']
+    
+                juncao_ref_2 = df_pdf.at[index, 'Junção']
+    
+                if tipo_de_servico_ref == 'REGULAR' and not pd.isna(juncao_ref_2):
+    
+                    df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Menor Horário']
+    
+                elif (tipo_de_servico_ref == 'REGULAR' and pd.isna(juncao_ref_2)) or (tipo_de_servico_ref != 'REGULAR'):
+    
+                    df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Horario Voo']
 
             df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
@@ -4408,10 +4444,19 @@ elif 'nome_html_bv' in st.session_state and \
         df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
                             df_roteiros_alternativos], ignore_index=True)
 
-        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
-            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+        for index in range(len(df_pdf)):
 
-        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+            tipo_de_servico_ref = df_pdf.at[index, 'Modo do Servico']
+
+            juncao_ref_2 = df_pdf.at[index, 'Junção']
+
+            if tipo_de_servico_ref == 'REGULAR' and not pd.isna(juncao_ref_2):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Menor Horário']
+
+            elif (tipo_de_servico_ref == 'REGULAR' and pd.isna(juncao_ref_2)) or (tipo_de_servico_ref != 'REGULAR'):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Horario Voo']
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
@@ -4509,10 +4554,19 @@ elif 'nome_html_bv' in st.session_state and \
             df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
                                 df_roteiros_alternativos], ignore_index=True)
 
-            df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
-                lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+            for index in range(len(df_pdf)):
 
-            df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+                tipo_de_servico_ref = df_pdf.at[index, 'Modo do Servico']
+    
+                juncao_ref_2 = df_pdf.at[index, 'Junção']
+    
+                if tipo_de_servico_ref == 'REGULAR' and not pd.isna(juncao_ref_2):
+    
+                    df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Menor Horário']
+    
+                elif (tipo_de_servico_ref == 'REGULAR' and pd.isna(juncao_ref_2)) or (tipo_de_servico_ref != 'REGULAR'):
+    
+                    df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Horario Voo']
 
             df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
@@ -4583,10 +4637,19 @@ elif 'nome_html_bv' in st.session_state and \
         df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, 
                             df_roteiros_alternativos], ignore_index=True)
 
-        df_pdf['Horario Voo / Menor Horário'] = df_pdf.apply(
-            lambda row: row['Horario Voo'] if pd.isna(row['Menor Horário']) else row['Menor Horário'], axis=1)
+        for index in range(len(df_pdf)):
 
-        df_pdf.loc[df_pdf['Tipo de Servico']!='REGULAR', 'Horario Voo / Menor Horário'] = df_pdf['Horario Voo']
+            tipo_de_servico_ref = df_pdf.at[index, 'Modo do Servico']
+
+            juncao_ref_2 = df_pdf.at[index, 'Junção']
+
+            if tipo_de_servico_ref == 'REGULAR' and not pd.isna(juncao_ref_2):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Menor Horário']
+
+            elif (tipo_de_servico_ref == 'REGULAR' and pd.isna(juncao_ref_2)) or (tipo_de_servico_ref != 'REGULAR'):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Horario Voo']
 
         df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
 
