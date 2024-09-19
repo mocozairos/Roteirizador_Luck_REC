@@ -396,6 +396,8 @@ def definir_intervalo_ref(df, value, intervalo_hoteis):
 
 def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max, df_hoteis, intervalo_hoteis, df_juncoes_pax_max, 
                                        df_voos_pax_max):
+
+    parar_loop=0
     
     if pax_max > 30:
 
