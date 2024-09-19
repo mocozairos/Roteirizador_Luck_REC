@@ -2071,6 +2071,20 @@ def verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, ro
 
     else:
 
+        lista_dfs = [df_fretamentos, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
+
+        n_carros = 0
+
+        for df in lista_dfs:
+            
+            if len(df)>0:
+
+                n_carros += len(df[['Roteiro', 'Carros']].drop_duplicates())
+
+        with row_rotas_alternativas[0]:
+
+            st.header(f'A roteirização usou um total de {n_carros} carros')
+
         if len(df_hoteis_pax_max)>0:
 
             coluna = plotar_roteiros_simples(df_hoteis_pax_max, row3, coluna)
@@ -4476,7 +4490,8 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
             df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos.columns.tolist())
 
-        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
+        lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
+                     df_roteiros_alternativos]
 
         n_carros = 0
 
@@ -4607,7 +4622,8 @@ elif 'nome_html_bv' in st.session_state and \
 
                 df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_bv.columns.tolist())
 
-            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
+            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
+                         df_roteiros_alternativos]
 
             n_carros = 0
     
@@ -4803,7 +4819,8 @@ elif 'nome_html_bv' in st.session_state and \
 
                 df_roteiros_alternativos = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_pd.columns.tolist())
             
-            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios]
+            lista_dfs = [df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
+                         df_roteiros_alternativos]
 
             n_carros = 0
     
