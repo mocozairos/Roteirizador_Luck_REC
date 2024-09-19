@@ -2090,9 +2090,26 @@ def verificar_rotas_alternativas_ou_plotar_roteiros(df_roteiros_alternativos, ro
 
         criar_output_html(nome_html, html)
 
-        df_pdf = pd.concat([df_router_filtrado_2, df_hoteis_pax_max], ignore_index=True)
+        df_pdf = pd.concat([df_router_filtrado_2, df_fretamentos, df_hoteis_pax_max, df_juncoes_pax_max, df_voos_pax_max], 
+                           ignore_index=True)
+        
+        for index in range(len(df_pdf)):
 
-        inserir_roteiros_html(nome_html, df_pdf, df_roteiros_alternativos)
+            tipo_de_servico_ref = df_pdf.at[index, 'Modo do Servico']
+
+            juncao_ref_2 = df_pdf.at[index, 'Junção']
+
+            if tipo_de_servico_ref == 'REGULAR' and not pd.isna(juncao_ref_2):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Menor Horário']
+
+            elif (tipo_de_servico_ref == 'REGULAR' and pd.isna(juncao_ref_2)) or (tipo_de_servico_ref != 'REGULAR'):
+
+                df_pdf.at[index, 'Horario Voo / Menor Horário'] = df_pdf.at[index, 'Horario Voo']
+
+        df_pdf = df_pdf.sort_values(by=['Horario Voo / Menor Horário', 'Junção']).reset_index(drop=True)
+
+        inserir_roteiros_html(nome_html, df_pdf)
 
         with open(nome_html, "r", encoding="utf-8") as file:
 
