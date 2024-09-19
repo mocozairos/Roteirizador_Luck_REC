@@ -792,7 +792,7 @@ def gerar_roteiros_apoio(df_servicos):
 
                     paxs_total_roteiro+=paxs_hotel
 
-                    df_ref_apoios.at[index, 'Roteiro'] = item
+                    df_ref_apoios.at[index, 'Roteiro'] = value
 
                     df_ref_apoios.at[index, 'Carros'] = carros
 
