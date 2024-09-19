@@ -549,9 +549,9 @@ def roteirizar_voo_juncao_mais_pax_max(df_servicos, roteiro, max_hoteis, pax_max
 
                             df_servicos = df_servicos.drop(index=df_ref_2.at[index, 'index'])
 
-                            df_voos_pax_max.at[len(df_juncoes_pax_max)-1, 'Roteiro']=roteiro
+                            df_voos_pax_max.at[len(df_voos_pax_max)-1, 'Roteiro']=roteiro
 
-                            df_voos_pax_max.at[len(df_juncoes_pax_max)-1, 'Carros']=carro
+                            df_voos_pax_max.at[len(df_voos_pax_max)-1, 'Carros']=carro
 
                     else:
 
