@@ -87,7 +87,7 @@ def inserir_hoteis_faltantes(itens_faltantes, df_hoteis, aba_excel, regiao):
 
     sheet = spreadsheet.worksheet(aba_excel)
     sheet_data = sheet.get_all_values()
-    limpar_colunas = "A:D"
+    limpar_colunas = "A:F"
     sheet.batch_clear([limpar_colunas])
     data = [df_hoteis_geral.columns.values.tolist()] + df_hoteis_geral.values.tolist()
     sheet.update("A1", data)
