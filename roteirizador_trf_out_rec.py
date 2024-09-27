@@ -75,7 +75,7 @@ def inserir_hoteis_faltantes(itens_faltantes, df_hoteis, aba_excel, regiao):
 
     df_itens_faltantes[['Região', 'Sequência', 'Bus', 'Micro', 'Van']]=''
 
-    df_hoteis_geral = pd.concat([df_hoteis, df_itens_faltantes])
+    df_hoteis_geral = pd.concat([df_hoteis, df_itens_faltantes], ignore_index=True)
 
     nome_credencial = st.secrets["CREDENCIAL_SHEETS"]
     credentials = service_account.Credentials.from_service_account_info(nome_credencial)
@@ -305,7 +305,7 @@ def roteirizar_hoteis_mais_pax_max(df_servicos, roteiro, df_hoteis_pax_max):
 
                         df_servicos = df_servicos.drop(index=df_hotel_pax_max.at[index_2, 'index'])
 
-                        df_hoteis_pax_max = pd.concat([df_hoteis_pax_max, df_hotel_pax_max.loc[[index_2]]])
+                        df_hoteis_pax_max = pd.concat([df_hoteis_pax_max, df_hotel_pax_max.loc[[index_2]]], ignore_index=True)
 
                         df_hoteis_pax_max.at[index_2, 'Roteiro']=roteiro
 
@@ -357,7 +357,7 @@ def roteirizar_hoteis_mais_pax_max(df_servicos, roteiro, df_hoteis_pax_max):
 
                         df_servicos = df_servicos.drop(index=df_hotel_pax_max.at[index_2, 'index'])
 
-                        df_hoteis_pax_max = pd.concat([df_hoteis_pax_max, df_hotel_pax_max.loc[[index_2]]])
+                        df_hoteis_pax_max = pd.concat([df_hoteis_pax_max, df_hotel_pax_max.loc[[index_2]]], ignore_index=True)
 
                         df_hoteis_pax_max.at[index_2, 'Roteiro']=roteiro
 
@@ -4340,8 +4340,6 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
 
         df_router_filtrado_2 = criar_df_servicos_2(df_router_filtrado, st.session_state.df_juncao_voos, df_hoteis_ref)
 
-        st.write(df_router_filtrado_2)
-
         roteiro = 0
 
         # Criando dataframe que vai receber os hoteis que tem mais paxs que a capacidade máxima da frota
@@ -4353,7 +4351,7 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
         # Roteirizando hoteis que podem receber ônibus com mais paxs que a capacidade máxima da frota
 
         df_router_filtrado_2, df_hoteis_pax_max, roteiro = \
-            roteirizar_hoteis_mais_pax_max(df_router_filtrado_2, roteiro, df_hoteis_pax_max)
+                roteirizar_hoteis_mais_pax_max(df_router_filtrado_2, roteiro, df_hoteis_pax_max)
 
         df_juncoes_pax_max = pd.DataFrame()
 
