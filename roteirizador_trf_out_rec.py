@@ -155,7 +155,7 @@ def definir_horario_primeiro_hotel(df, index):
 
     modo = df.at[index, 'Modo do Servico']
 
-    if pd.isna(juncao) or modo!='REGULAR':
+    if juncao is None or pd.isna(juncao) or modo!='REGULAR':
 
         hora_voo = df.at[index, 'Horario Voo']
 
