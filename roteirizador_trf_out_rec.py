@@ -145,10 +145,6 @@ def definir_horario_primeiro_hotel(df, index):
 
     data_voo = df.at[index, 'Data Voo']
 
-    st.write(index)
-
-    st.write(df)
-
     if 'Junção' in df.columns.tolist():
 
         juncao = df.at[index, 'Junção']
@@ -156,8 +152,6 @@ def definir_horario_primeiro_hotel(df, index):
     else:
 
         juncao = None
-
-    st.write(juncao)
 
     modo = df.at[index, 'Modo do Servico']
 
@@ -4353,6 +4347,8 @@ elif roteirizar and servico_roteiro=='OUT (PORTO DE GALINHAS)':
         lista_colunas = ['index']
 
         df_hoteis_pax_max = pd.DataFrame(columns=lista_colunas.extend(df_router_filtrado_2.columns.tolist()))
+
+        st.write(df_hoteis_pax_max)
 
         # Roteirizando hoteis que podem receber ônibus com mais paxs que a capacidade máxima da frota
 
