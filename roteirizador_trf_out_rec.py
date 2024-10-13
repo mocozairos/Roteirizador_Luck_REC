@@ -168,12 +168,17 @@ def definir_horario_primeiro_hotel(df, index):
     data_hora_voo = pd.to_datetime(data_hora_voo_str, format='%Y-%m-%d %H:%M:%S')
 
     if (servico=='OUT (PORTO DE GALINHAS)' or servico=='OUT (SERRAMBI)' or servico=='OUT (CABO DE STO AGOSTINHO)') and \
-        hora_voo>=pd.to_datetime('13:00:00').time():
+        (hora_voo>=pd.to_datetime('11:00:00').time() and hora_voo<=pd.to_datetime('12:40:00').time()):
 
         data_hora_primeiro_hotel=data_hora_voo - intervalo_inicial_pga_cab_pos_11
 
     elif (servico=='OUT (PORTO DE GALINHAS)' or servico=='OUT (SERRAMBI)' or servico=='OUT (CABO DE STO AGOSTINHO)') and \
-        hora_voo<pd.to_datetime('13:00:00').time():
+        (hora_voo>pd.to_datetime('12:40:00').time()):
+
+        data_hora_primeiro_hotel=data_hora_voo - transformar_timedelta(datetime.time(5, 00))
+
+    elif (servico=='OUT (PORTO DE GALINHAS)' or servico=='OUT (SERRAMBI)' or servico=='OUT (CABO DE STO AGOSTINHO)') and \
+        hora_voo<pd.to_datetime('11:00:00').time():
 
         data_hora_primeiro_hotel=data_hora_voo - intervalo_inicial_pga_cab_pre_11
 
@@ -2484,10 +2489,10 @@ row1 = st.columns(3)
 
 with row1[0]:
 
-    intervalo_inicial_pga_cab_pos_11 = objeto_intervalo('Horário Último Hotel | Porto ou Cabo | Voos após 13:00', datetime.time(5, 00), 
+    intervalo_inicial_pga_cab_pos_11 = objeto_intervalo('Horário Último Hotel | Porto ou Cabo | Voos após 11:00', datetime.time(4, 00), 
                                                         'intervalo_inicial_pga_cab_pos_11')
     
-    intervalo_inicial_pga_cab_pre_11 = objeto_intervalo('Horário Último Hotel | Porto ou Cabo | Voos antes 13:00', datetime.time(4, 30), 
+    intervalo_inicial_pga_cab_pre_11 = objeto_intervalo('Horário Último Hotel | Porto ou Cabo | Voos antes 11:00', datetime.time(3, 30), 
                                                         'intervalo_inicial_pga_cab_pre_11')
     
     intervalo_inicial_rec = objeto_intervalo('Horário Último Hotel | Recife', datetime.time(2, 30), 'intervalo_inicial_rec')
