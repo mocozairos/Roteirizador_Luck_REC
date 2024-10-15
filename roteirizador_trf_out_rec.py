@@ -2484,7 +2484,7 @@ row1 = st.columns(3)
 
 with row1[0]:
 
-    intervalo_inicial_pga_cab_pos_11 = objeto_intervalo('Horário Último Hotel | Porto ou Cabo | Voos após 11:00', datetime.time(4, 30), 
+    intervalo_inicial_pga_cab_pos_11 = objeto_intervalo('Horário Último Hotel | Porto ou Cabo | Voos após 11:00', datetime.time(4, 00), 
                                                         'intervalo_inicial_pga_cab_pos_11')
     
     intervalo_inicial_pga_cab_pre_11 = objeto_intervalo('Horário Último Hotel | Porto ou Cabo | Voos antes 11:00', datetime.time(3, 30), 
