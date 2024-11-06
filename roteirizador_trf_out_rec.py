@@ -87,10 +87,12 @@ def inserir_hoteis_faltantes(itens_faltantes, df_hoteis, aba_excel, regiao):
 
     sheet = spreadsheet.worksheet(aba_excel)
     sheet_data = sheet.get_all_values()
-    limpar_colunas = "A:F"
-    sheet.batch_clear([limpar_colunas])
-    data = [df_hoteis_geral.columns.values.tolist()] + df_hoteis_geral.values.tolist()
-    sheet.update("A1", data)
+    last_filled_row = len(sheet_data)
+    data = df_itens_faltantes.values.tolist()
+    start_row = last_filled_row + 1
+    start_cell = f"A{start_row}"
+    
+    sheet.update(start_cell, data)
 
     st.error(f'Os hoteis acima não estão cadastrados na lista de sequência de hoteis. Eles foram inseridos no final da lista de {regiao}. Por favor, coloque-os na sequência e tente novamente')
 
