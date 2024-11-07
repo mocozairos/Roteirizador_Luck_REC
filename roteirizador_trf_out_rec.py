@@ -4550,11 +4550,11 @@ if roteirizar:
 
     # Gerando roteiros alternativos 2
 
-    max_hoteis_2 = 10
+    max_hoteis_2 = 5
 
-    max_hoteis_4 = 16
+    max_hoteis_4 = 8
 
-    intervalo_pu_hotel_2 = pd.Timedelta(hours=1)
+    intervalo_pu_hotel_2 = pd.Timedelta(hours=0, minutes=50, seconds=0)
 
     pax_max_utilitario = 4
 
