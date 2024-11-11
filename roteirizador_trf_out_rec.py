@@ -4552,7 +4552,7 @@ if roteirizar:
 
     max_hoteis_2 = 5
 
-    max_hoteis_4 = 8
+    # max_hoteis_4 = 8
 
     intervalo_pu_hotel_2 = pd.Timedelta(hours=0, minutes=50, seconds=0)
 
@@ -4568,7 +4568,9 @@ if roteirizar:
 
     df_roteiros_alternativos_3 = gerar_roteiros_alternativos_3(df_router_filtrado_2)
 
-    df_roteiros_alternativos_4 = gerar_roteiros_alternativos_4(df_router_filtrado_2, max_hoteis_4)
+    # df_roteiros_alternativos_4 = gerar_roteiros_alternativos_4(df_router_filtrado_2, max_hoteis_4)
+
+    df_roteiros_alternativos_4 = pd.DataFrame(columns=df_router_filtrado_2.columns.tolist())
 
     # Identificando serviços das rotas primárias que vão precisar de apoios
 
@@ -4620,15 +4622,17 @@ if roteirizar:
 
     # Gerando rotas de apoios de rotas alternativas 4
 
-    df_roteiros_alternativos_4 = identificar_apoios_em_df_4(df_roteiros_alternativos_4, pax_max_utilitario, pax_max_van, pax_max_micro, 4)
+    # df_roteiros_alternativos_4 = identificar_apoios_em_df_4(df_roteiros_alternativos_4, pax_max_utilitario, pax_max_van, pax_max_micro, 4)
 
     # Gerando rotas de apoios de rotas alternativas 4
 
-    df_roteiros_alternativos_4, df_roteiros_apoios_alternativos_4 = gerar_roteiros_apoio(df_roteiros_alternativos_4)
+    # df_roteiros_alternativos_4, df_roteiros_apoios_alternativos_4 = gerar_roteiros_apoio(df_roteiros_alternativos_4)
+
+    df_roteiros_apoios_alternativos_4 = pd.DataFrame(columns=df_roteiros_apoios_alternativos_3.columns.tolist())
 
     # Roteirizando carro principal desconsiderando os hoteis do apoio
 
-    df_roteiros_alternativos_4 = roteirizar_pos_apoios(df_roteiros_apoios_alternativos_4, df_roteiros_alternativos_4)
+    # df_roteiros_alternativos_4 = roteirizar_pos_apoios(df_roteiros_apoios_alternativos_4, df_roteiros_alternativos_4)
 
     # Plotando roteiros de cada carro
 
@@ -4672,8 +4676,8 @@ if roteirizar:
 
     st.session_state.df_roteiros_apoios_alternativos_4 = df_roteiros_apoios_alternativos_4
 
-    verificar_rotas_alternativas_ou_plotar_roteiros_com_apoio(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, df_router_filtrado_2, df_roteiros_apoios, 
-                                                              df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, st.session_state.nome_html)
+    verificar_rotas_alternativas_ou_plotar_roteiros_com_apoio(df_roteiros_alternativos, row_warning, row3, coluna, df_hoteis_pax_max, df_router_filtrado_2, 
+    df_roteiros_apoios, df_roteiros_apoios_alternativos, st.session_state.df_juncao_voos, st.session_state.nome_html)
 
 # Gerar roteiros finais
 
@@ -4703,7 +4707,7 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
             rotas_alternativas = st.multiselect('Selecione as Rotas Alternativas 1 que serão usadas', lista_rotas_alternativas)
 
-            st.markdown('*Rotas Alternativas 2 são rotas que tentam colocar apenas um carro para o roteiro, desde que o número de hoteis da rota não passe de 10 e o intervalo entre o primeiro e último hotel seja menor que 1 hora.*')
+            st.markdown('*Rotas Alternativas 2 são rotas que tentam colocar apenas um carro para o roteiro, desde que o número de hoteis da rota não passe de 5 e o intervalo entre o primeiro e último hotel seja menor que 50 minutos.*')
 
             rotas_alternativas_2 = st.multiselect('Selecione as Rotas Alternativas 2 que serão usadas', lista_rotas_alternativas_2)
 
@@ -4711,9 +4715,11 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
             rotas_alternativas_3 = st.multiselect('Selecione as Rotas Alternativas 3 que serão usadas', lista_rotas_alternativas_3)
 
-            st.markdown('*Rotas Alternativas 4 são rotas que tentam colocar menos carros, compensando com mais apoios.*')
+            # st.markdown('*Rotas Alternativas 4 são rotas que tentam colocar menos carros, compensando com mais apoios.*')
 
-            rotas_alternativas_4 = st.multiselect('Selecione as Rotas Alternativas 4 que serão usadas', lista_rotas_alternativas_4)
+            # rotas_alternativas_4 = st.multiselect('Selecione as Rotas Alternativas 4 que serão usadas', lista_rotas_alternativas_4)
+
+            rotas_alternativas_4 = lista_rotas_alternativas_4
         
             gerar_roteiro_final = st.button('Gerar Roteiro Final')
 
@@ -4809,28 +4815,28 @@ if 'nome_html' in st.session_state and len(st.session_state.df_roteiros_alternat
 
                     df_roteiros_alternativos_3 = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_3.columns.tolist())
 
-                if len(rotas_alternativas_4)>0:
+                # if len(rotas_alternativas_4)>0:
 
-                    df_roteiros_alternativos_4 = st.session_state.df_roteiros_alternativos_4\
-                        [st.session_state.df_roteiros_alternativos_4['Roteiro'].isin(rotas_alternativas_4)].reset_index(drop=True)
+                #     df_roteiros_alternativos_4 = st.session_state.df_roteiros_alternativos_4\
+                #         [st.session_state.df_roteiros_alternativos_4['Roteiro'].isin(rotas_alternativas_4)].reset_index(drop=True)
                     
-                    df_roteiros_apoios_alternativos_4 = st.session_state.df_roteiros_apoios_alternativos_4\
-                        [st.session_state.df_roteiros_apoios_alternativos_4['Roteiro'].isin(rotas_alternativas_4)].reset_index(drop=True)
+                #     df_roteiros_apoios_alternativos_4 = st.session_state.df_roteiros_apoios_alternativos_4\
+                #         [st.session_state.df_roteiros_apoios_alternativos_4['Roteiro'].isin(rotas_alternativas_4)].reset_index(drop=True)
                     
-                    df_router_filtrado_2 = df_router_filtrado_2[~df_router_filtrado_2['Roteiro'].isin(rotas_alternativas_4)]\
-                        .reset_index(drop=True)
+                #     df_router_filtrado_2 = df_router_filtrado_2[~df_router_filtrado_2['Roteiro'].isin(rotas_alternativas_4)]\
+                #         .reset_index(drop=True)
                     
-                    df_roteiros_apoios = df_roteiros_apoios[~df_roteiros_apoios['Roteiro'].isin(rotas_alternativas_4)]\
-                        .reset_index(drop=True)
+                #     df_roteiros_apoios = df_roteiros_apoios[~df_roteiros_apoios['Roteiro'].isin(rotas_alternativas_4)]\
+                #         .reset_index(drop=True)
                     
-                    df_roteiros_alternativos = pd.concat([df_roteiros_alternativos, df_roteiros_alternativos_4], ignore_index=True)
+                #     df_roteiros_alternativos = pd.concat([df_roteiros_alternativos, df_roteiros_alternativos_4], ignore_index=True)
 
-                    df_roteiros_apoios_alternativos = pd.concat([df_roteiros_apoios_alternativos, df_roteiros_apoios_alternativos_4], 
-                                                                ignore_index=True)
+                #     df_roteiros_apoios_alternativos = pd.concat([df_roteiros_apoios_alternativos, df_roteiros_apoios_alternativos_4], 
+                #                                                 ignore_index=True)
                     
-                else:
+                # else:
 
-                    df_roteiros_alternativos_4 = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_4.columns.tolist())
+                #     df_roteiros_alternativos_4 = pd.DataFrame(columns=st.session_state.df_roteiros_alternativos_4.columns.tolist())
 
                 lista_dfs = [df_hoteis_pax_max, df_router_filtrado_2, df_roteiros_apoios, df_roteiros_alternativos]
 
