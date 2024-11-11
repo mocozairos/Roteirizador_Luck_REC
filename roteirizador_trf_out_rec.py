@@ -3663,11 +3663,11 @@ if servico_roteiro and 'df_horario_esp_ultimo_hotel' in st.session_state:
 
 if roteirizar:
 
-    puxar_sequencias_hoteis('1az0u1yGWqIXE9KcUro6VznsVj7d5fozhH3dDsT1eI6A', 
-                            ['Hoteis Porto', 'Hoteis Boa Viagem', 'Hoteis Piedade', 'Hoteis Cabo', 'Hoteis Maragogi', 'Hoteis Olinda', 'Hoteis Fazenda Nova', 'Hoteis Carneiros', 'Hoteis Joao Pessoa', 
-                             'Hoteis Recife Centro', 'Hoteis Alagoas', 'Hoteis Maceio', 'Hoteis Milagres'], 
-                             ['df_hoteis_porto', 'df_hoteis_boa_viagem', 'df_hoteis_piedade', 'df_hoteis_cabo', 'df_hoteis_maragogi', 'df_hoteis_olinda', 'df_hoteis_fazenda_nova', 
-                              'df_hoteis_carneiros', 'df_hoteis_joao_pessoa', 'df_hoteis_recife_centro', 'df_hoteis_alagoas', 'df_hoteis_maceio', 'df_hoteis_milagres'])
+    # puxar_sequencias_hoteis('1az0u1yGWqIXE9KcUro6VznsVj7d5fozhH3dDsT1eI6A', 
+    #                         ['Hoteis Porto', 'Hoteis Boa Viagem', 'Hoteis Piedade', 'Hoteis Cabo', 'Hoteis Maragogi', 'Hoteis Olinda', 'Hoteis Fazenda Nova', 'Hoteis Carneiros', 'Hoteis Joao Pessoa', 
+    #                          'Hoteis Recife Centro', 'Hoteis Alagoas', 'Hoteis Maceio', 'Hoteis Milagres'], 
+    #                          ['df_hoteis_porto', 'df_hoteis_boa_viagem', 'df_hoteis_piedade', 'df_hoteis_cabo', 'df_hoteis_maragogi', 'df_hoteis_olinda', 'df_hoteis_fazenda_nova', 
+    #                           'df_hoteis_carneiros', 'df_hoteis_joao_pessoa', 'df_hoteis_recife_centro', 'df_hoteis_alagoas', 'df_hoteis_maceio', 'df_hoteis_milagres'])
     
     st.session_state.dict_regioes_hoteis = {'OUT (PORTO DE GALINHAS)': ['df_hoteis_porto', 'Porto', 'Hoteis Porto', 'Porto'], 
                                             'OUT (SERRAMBI)': ['df_hoteis_serrambi', 'Serrambi', 'Hoteis Serrambi', 'Serrambi'], 
@@ -3767,7 +3767,39 @@ if roteirizar:
             df_router_bv, df_hoteis_pax_max_bv, roteiro = \
                 roteirizar_hoteis_mais_pax_max(df_router_bv, roteiro, df_hoteis_pax_max_bv)
             
-            df_hoteis_pax_max = pd.concat([df_hoteis_pax_max_piedade, df_hoteis_pax_max_bv], ignore_index=True)
+            df_hoteis_pax_max_inacessibilidade_utilitario_bv = pd.DataFrame(columns=lista_colunas.extend(df_router_bv.columns.tolist()))
+
+            df_hoteis_pax_max_inacessibilidade_van_bv = pd.DataFrame(columns=lista_colunas.extend(df_router_bv.columns.tolist()))
+
+            df_hoteis_pax_max_inacessibilidade_micro_bv = pd.DataFrame(columns=lista_colunas.extend(df_router_bv.columns.tolist()))
+
+            df_router_bv, df_hoteis_pax_max_inacessibilidade_utilitario_bv, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_bv, roteiro, df_hoteis_pax_max_inacessibilidade_utilitario_bv, pax_max_utilitario, 'Van')
+            
+            df_router_bv, df_hoteis_pax_max_inacessibilidade_van_bv, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_bv, roteiro, df_hoteis_pax_max_inacessibilidade_van_bv, pax_max_van, 'Micro')
+            
+            df_router_bv, df_hoteis_pax_max_inacessibilidade_micro_bv, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_bv, roteiro, df_hoteis_pax_max_inacessibilidade_micro_bv, pax_max_micro, 'Bus')
+            
+            df_hoteis_pax_max_inacessibilidade_utilitario_piedade = pd.DataFrame(columns=lista_colunas.extend(df_router_piedade.columns.tolist()))
+
+            df_hoteis_pax_max_inacessibilidade_van_piedade = pd.DataFrame(columns=lista_colunas.extend(df_router_piedade.columns.tolist()))
+
+            df_hoteis_pax_max_inacessibilidade_micro_piedade = pd.DataFrame(columns=lista_colunas.extend(df_router_piedade.columns.tolist()))
+
+            df_router_piedade, df_hoteis_pax_max_inacessibilidade_utilitario_piedade, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_piedade, roteiro, df_hoteis_pax_max_inacessibilidade_utilitario_piedade, pax_max_utilitario, 'Van')
+            
+            df_router_piedade, df_hoteis_pax_max_inacessibilidade_van_piedade, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_piedade, roteiro, df_hoteis_pax_max_inacessibilidade_van_piedade, pax_max_van, 'Micro')
+            
+            df_router_piedade, df_hoteis_pax_max_inacessibilidade_micro_piedade, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_piedade, roteiro, df_hoteis_pax_max_inacessibilidade_micro_piedade, pax_max_micro, 'Bus')
+            
+            df_hoteis_pax_max = pd.concat([df_hoteis_pax_max_piedade, df_hoteis_pax_max_bv, df_hoteis_pax_max_inacessibilidade_utilitario_bv, df_hoteis_pax_max_inacessibilidade_van_bv, 
+                                           df_hoteis_pax_max_inacessibilidade_micro_bv, df_hoteis_pax_max_inacessibilidade_utilitario_piedade, df_hoteis_pax_max_inacessibilidade_van_piedade, 
+                                           df_hoteis_pax_max_inacessibilidade_micro_piedade], ignore_index=True)
 
             df_router_piedade, roteiro = gerar_horarios_apresentacao(df_router_piedade, roteiro, max_hoteis_roteirizacao)
 
@@ -3793,6 +3825,24 @@ if roteirizar:
 
             df_router_filtrado_2, df_hoteis_pax_max, roteiro = \
                 roteirizar_hoteis_mais_pax_max(df_router_filtrado_2, roteiro, df_hoteis_pax_max)
+            
+            df_hoteis_pax_max_inacessibilidade_utilitario = pd.DataFrame(columns=lista_colunas.extend(df_router_filtrado_2.columns.tolist()))
+
+            df_hoteis_pax_max_inacessibilidade_van = pd.DataFrame(columns=lista_colunas.extend(df_router_filtrado_2.columns.tolist()))
+
+            df_hoteis_pax_max_inacessibilidade_micro = pd.DataFrame(columns=lista_colunas.extend(df_router_filtrado_2.columns.tolist()))
+
+            df_router_filtrado_2, df_hoteis_pax_max_inacessibilidade_utilitario, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_filtrado_2, roteiro, df_hoteis_pax_max_inacessibilidade_utilitario, pax_max_utilitario, 'Van')
+            
+            df_router_filtrado_2, df_hoteis_pax_max_inacessibilidade_van, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_filtrado_2, roteiro, df_hoteis_pax_max_inacessibilidade_van, pax_max_van, 'Micro')
+            
+            df_router_filtrado_2, df_hoteis_pax_max_inacessibilidade_micro, roteiro = \
+                roteirizar_hoteis_mais_pax_max_inacessibilidade(df_router_filtrado_2, roteiro, df_hoteis_pax_max_inacessibilidade_micro, pax_max_micro, 'Bus')
+            
+            df_hoteis_pax_max = pd.concat([df_hoteis_pax_max, df_hoteis_pax_max_inacessibilidade_utilitario, df_hoteis_pax_max_inacessibilidade_van, 
+                                           df_hoteis_pax_max_inacessibilidade_micro], ignore_index=True)
 
             df_router_filtrado_2, roteiro = gerar_horarios_apresentacao(df_router_filtrado_2, roteiro, max_hoteis_roteirizacao)
 
