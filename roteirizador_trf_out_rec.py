@@ -328,9 +328,9 @@ def definir_horario_primeiro_hotel(df, index):
 
     data_voo = df.at[index, 'Data Voo']
 
-    nome_voo = df.at[index, 'Voo']
+    # nome_voo = df.at[index, 'Voo']
 
-    regiao = df.at[index, 'Região']
+    # regiao = df.at[index, 'Região']
 
     if 'Junção' in df.columns.tolist():
 
@@ -367,7 +367,7 @@ def definir_horario_primeiro_hotel(df, index):
 
             if tipo_voo=='Internacional':
 
-                return data_hora_voo - transformar_timedelta(st.session_state.intervalo_inicial_pga_cab_pos_11) - transformar_timedelta(time(1, 0))
+                return data_hora_voo - transformar_timedelta(time(4, 0))
 
             else:
 
@@ -378,7 +378,7 @@ def definir_horario_primeiro_hotel(df, index):
 
             if tipo_voo=='Internacional':
 
-                return data_hora_voo - transformar_timedelta(st.session_state.intervalo_inicial_pga_cab_pre_11) - transformar_timedelta(time(1, 0))
+                return data_hora_voo - transformar_timedelta(time(4, 0))
 
             else:
 
@@ -388,7 +388,7 @@ def definir_horario_primeiro_hotel(df, index):
 
             if tipo_voo=='Internacional':
 
-                return data_hora_voo - transformar_timedelta(st.session_state.intervalo_inicial_rec) - transformar_timedelta(time(1, 0))
+                return data_hora_voo - transformar_timedelta(time(3, 0))
 
             else:
 
@@ -398,7 +398,7 @@ def definir_horario_primeiro_hotel(df, index):
 
             if tipo_voo=='Internacional':
 
-                return data_hora_voo - transformar_timedelta(st.session_state.intervalo_inicial_mar_jpa) - transformar_timedelta(time(1, 0))
+                return data_hora_voo - transformar_timedelta(time(5, 0))
 
             else:
 
@@ -408,7 +408,7 @@ def definir_horario_primeiro_hotel(df, index):
 
             if tipo_voo=='Internacional':
 
-                return data_hora_voo - transformar_timedelta(st.session_state.intervalo_inicial_ol) - transformar_timedelta(time(1, 0))
+                return data_hora_voo - transformar_timedelta(time(3, 30))
 
             else:
 
@@ -418,7 +418,7 @@ def definir_horario_primeiro_hotel(df, index):
 
             if tipo_voo=='Internacional':
 
-                return data_hora_voo - transformar_timedelta(st.session_state.intervalo_inicial_mil) - transformar_timedelta(time(1, 0))
+                return data_hora_voo - transformar_timedelta(time(6, 0))
 
             else:
 
@@ -428,7 +428,7 @@ def definir_horario_primeiro_hotel(df, index):
 
             if tipo_voo=='Internacional':
 
-                return data_hora_voo - transformar_timedelta(st.session_state.intervalo_inicial_carneiros) - transformar_timedelta(time(1, 0))
+                return data_hora_voo - transformar_timedelta(time(4, 30))
 
             else:
 
@@ -438,7 +438,7 @@ def definir_horario_primeiro_hotel(df, index):
 
             if tipo_voo=='Internacional':
 
-                return data_hora_voo - transformar_timedelta(st.session_state.intervalo_inicial_mcz) - transformar_timedelta(time(1, 0))
+                return data_hora_voo - transformar_timedelta(time(7, 0))
 
             else:
 
