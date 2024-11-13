@@ -3130,7 +3130,8 @@ def roteirizar_hoteis_mais_pax_max_inacessibilidade(df_servicos, roteiro, df_hot
 
                 carro+=1
 
-                df_hotel_pax_max = df_servicos[(df_servicos['Modo do Servico']==modo) & (df_servicos['Servico']==servico) & (df_servicos['Junção']==ref_juncao) & (df_servicos['Est Origem']==hotel)].reset_index()
+                df_hotel_pax_max = df_servicos[(df_servicos['Modo do Servico']==modo) & (df_servicos['Servico']==servico) & (df_servicos['Junção']==ref_juncao) & 
+                                               (df_servicos['Est Origem']==hotel)].reset_index()
                 
                 paxs_total_ref = 0
                 
@@ -3278,6 +3279,49 @@ def objetos_parametros(row1):
         pax_max = st.number_input('Máximo de Paxs por Carro', step=1, value=48, key='pax_max')
 
         pax_cinco_min = st.number_input('Paxs Extras', step=1, value=100, key='pax_cinco_min', help='Número de paxs para aumentar intervalo entre hoteis em 5 minutos')
+
+def definir_horarios_sem_maraca_serrambi(df_servicos):
+
+    if st.session_state.servico_roteiro=='OUT (PORTO DE GALINHAS)':
+
+        lista_regioes_roteiro = df_servicos['Região'].unique().tolist()
+
+        if not 'MARACAÍPE' in lista_regioes_roteiro and not 'SERRAMBI' in lista_regioes_roteiro and 'VIA LOCAL' in lista_regioes_roteiro and \
+            ('VILA 1' in lista_regioes_roteiro or 'VILA 2' in lista_regioes_roteiro):
+
+            df_via_local = df_servicos[df_servicos['Região']=='VIA LOCAL'].reset_index(drop=True)
+
+            df_outras_regioes = df_servicos[df_servicos['Região']!='VIA LOCAL'].reset_index(drop=True)
+
+            df_nova_ordenacao = pd.concat([df_outras_regioes, df_via_local], ignore_index=True)
+
+            df_nova_ordenacao = gerar_horarios_apresentacao_2(df_nova_ordenacao)
+
+            df_servicos = df_nova_ordenacao
+
+            return df_servicos
+
+def roteirizar_sem_maraca_serrambi(df_servicos):
+
+    df_roteiros_carros = df_servicos[['Roteiro', 'Carros']].drop_duplicates().reset_index(drop=True)
+
+    for index in range(len(df_roteiros_carros)):
+
+        roteiro_referencia = df_roteiros_carros.at[index, 'Roteiro']
+
+        carro_referencia = df_roteiros_carros.at[index, 'Carros']
+
+        df_referencia = df_servicos[(df_servicos['Roteiro']==roteiro_referencia) & (df_servicos['Carros']==carro_referencia)].reset_index()
+
+        df_referencia = definir_horarios_sem_maraca_serrambi(df_referencia)
+
+        if df_referencia is not None:
+
+            for index_2, index_principal_ref in df_referencia['index'].items():
+
+                df_servicos.at[index_principal_ref, 'Data Horario Apresentacao'] = df_referencia.at[index_2, 'Data Horario Apresentacao']
+
+    return df_servicos
 
 st.set_page_config(layout='wide')
 
@@ -3938,6 +3982,14 @@ if roteirizar:
     # Gerando rotas de apoios de rotas alternativas 3
 
     df_roteiros_alternativos_3 = gerar_roteiros_apoio(df_roteiros_alternativos_3)
+
+    df_router_filtrado_2 = roteirizar_sem_maraca_serrambi(df_router_filtrado_2)
+
+    df_roteiros_alternativos = roteirizar_sem_maraca_serrambi(df_roteiros_alternativos)
+
+    df_roteiros_alternativos_2 = roteirizar_sem_maraca_serrambi(df_roteiros_alternativos_2)
+
+    df_roteiros_alternativos_3 = roteirizar_sem_maraca_serrambi(df_roteiros_alternativos_3)
 
     st.divider()
 
