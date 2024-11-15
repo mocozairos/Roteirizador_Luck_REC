@@ -3731,11 +3731,11 @@ if servico_roteiro and 'df_horario_esp_ultimo_hotel' in st.session_state:
 
 if roteirizar:
 
-    # puxar_sequencias_hoteis('1az0u1yGWqIXE9KcUro6VznsVj7d5fozhH3dDsT1eI6A', 
-    #                         ['Hoteis Porto', 'Hoteis Boa Viagem', 'Hoteis Piedade', 'Hoteis Cabo', 'Hoteis Maragogi', 'Hoteis Olinda', 'Hoteis Fazenda Nova', 'Hoteis Carneiros', 'Hoteis Joao Pessoa', 
-    #                          'Hoteis Recife Centro', 'Hoteis Alagoas', 'Hoteis Maceio', 'Hoteis Milagres'], 
-    #                          ['df_hoteis_porto', 'df_hoteis_boa_viagem', 'df_hoteis_piedade', 'df_hoteis_cabo', 'df_hoteis_maragogi', 'df_hoteis_olinda', 'df_hoteis_fazenda_nova', 
-    #                           'df_hoteis_carneiros', 'df_hoteis_joao_pessoa', 'df_hoteis_recife_centro', 'df_hoteis_alagoas', 'df_hoteis_maceio', 'df_hoteis_milagres'])
+    puxar_sequencias_hoteis('1az0u1yGWqIXE9KcUro6VznsVj7d5fozhH3dDsT1eI6A', 
+                            ['Hoteis Porto', 'Hoteis Boa Viagem', 'Hoteis Piedade', 'Hoteis Cabo', 'Hoteis Maragogi', 'Hoteis Olinda', 'Hoteis Fazenda Nova', 'Hoteis Carneiros', 'Hoteis Joao Pessoa', 
+                             'Hoteis Recife Centro', 'Hoteis Alagoas', 'Hoteis Maceio', 'Hoteis Milagres'], 
+                             ['df_hoteis_porto', 'df_hoteis_boa_viagem', 'df_hoteis_piedade', 'df_hoteis_cabo', 'df_hoteis_maragogi', 'df_hoteis_olinda', 'df_hoteis_fazenda_nova', 
+                              'df_hoteis_carneiros', 'df_hoteis_joao_pessoa', 'df_hoteis_recife_centro', 'df_hoteis_alagoas', 'df_hoteis_maceio', 'df_hoteis_milagres'])
     
     st.session_state.dict_regioes_hoteis = {'OUT (PORTO DE GALINHAS)': ['df_hoteis_porto', 'Porto', 'Hoteis Porto', 'Porto'], 
                                             'OUT (SERRAMBI)': ['df_hoteis_serrambi', 'Serrambi', 'Hoteis Serrambi', 'Serrambi'], 
