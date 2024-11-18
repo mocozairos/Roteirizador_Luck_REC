@@ -3309,16 +3309,6 @@ def roteirizar_hoteis_mais_pax_max_inacessibilidade(df_servicos, roteiro, df_hot
 
     return df_servicos, df_hoteis_pax_max, roteiro
 
-def ajustar_data_execucao_voos_internacionais_madrugada():
-
-    st.session_state.df_router['Horario Voo'] = pd.to_datetime(st.session_state.df_router['Horario Voo'], format='%H:%M:%S').dt.time
-
-    mask_voos_inter_madrugada = (st.session_state.df_router['Tipo do Translado']=='Internacional') & (st.session_state.df_router['Horario Voo']<=time(0,59))
-
-    st.session_state.df_router['Data Execucao'] = pd.to_datetime(st.session_state.df_router['Data Execucao'], format='%Y-%m-%d').dt.date
-
-    st.session_state.df_router.loc[mask_voos_inter_madrugada, 'Data Execucao'] = st.session_state.df_router['Data Execucao'] - timedelta(days=1)
-
 def puxar_dados_phoenix():
 
     st.session_state.df_router = gerar_df_phoenix('vw_router', 'test_phoenix_recife')
@@ -3326,8 +3316,6 @@ def puxar_dados_phoenix():
     st.session_state.df_router = st.session_state.df_router[(st.session_state.df_router['Status da Reserva']!='CANCELADO')].reset_index(drop=True)
 
     st.session_state.df_router['Data Horario Apresentacao Original'] = st.session_state.df_router['Data Horario Apresentacao']
-
-    ajustar_data_execucao_voos_internacionais_madrugada()
 
 def objetos_parametros(row1):
 
@@ -3617,8 +3605,6 @@ objetos_parametros(row1)
 st.divider()
 
 st.header('Juntar Voos')
-
-st.markdown('*os voos internacionais entre 00:00 e 00:59, na verdade serão executados em D+1, porém, pela antecedência de 1h a mais, eles aparecem no dia selecionado*')
 
 row2 = st.columns(3)
 
