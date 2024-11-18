@@ -4494,6 +4494,6 @@ if 'df_insercao' in st.session_state and len(st.session_state.df_insercao)>0:
 
     if lancar_horarios and len(st.session_state.df_insercao)>0:
 
-        df_insercao = atualizar_banco_dados(st.session_state.df_insercao, 'test_phoenix_noronha')
+        df_insercao = atualizar_banco_dados(st.session_state.df_insercao, 'test_phoenix_recife')
 
         st.rerun()
