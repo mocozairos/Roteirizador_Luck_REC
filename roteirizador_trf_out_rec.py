@@ -7,6 +7,7 @@ from collections import Counter
 from google.oauth2 import service_account
 import gspread 
 from itertools import combinations
+import requests
 
 def gerar_df_phoenix(vw_name, base_luck):
     
