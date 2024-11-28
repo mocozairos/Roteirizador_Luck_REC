@@ -4504,7 +4504,6 @@ if servico_roteiro and data_roteiro:
     df_ref_thiago = df_ref_thiago[~df_ref_thiago['Observacao'].str.upper().str.contains('CLD', na=False)]
 
     dict_tag_servico = \
-
         {'OUT (PORTO DE GALINHAS)': 'Porto de Galinhas', 
         'OUT (SERRAMBI)': 'Serrambi', 
         'OUT (CABO DE STO AGOSTINHO)': 'Cabo de Santo Agostinho', 
