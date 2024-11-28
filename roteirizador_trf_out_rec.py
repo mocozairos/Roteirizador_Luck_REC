@@ -4482,3 +4482,65 @@ if 'df_insercao' in st.session_state and len(st.session_state.df_insercao)>0:
         df_insercao = atualizar_banco_dados(st.session_state.df_insercao, 'test_phoenix_recife')
 
         st.rerun()
+
+if servico_roteiro and data_roteiro:
+
+    if servico_roteiro=='OUT (PORTO DE GALINHAS)' or servico_roteiro=='OUT (SERRAMBI)':
+
+        df_ref_thiago = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
+                                                        (st.session_state.df_router['Tipo de Servico']=='OUT') & 
+                                                        (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                        ((st.session_state.df_router['Servico']=='OUT (PORTO DE GALINHAS)') | 
+                                                         (st.session_state.df_router['Servico']=='OUT (SERRAMBI)'))].reset_index(drop=True)
+
+    else:
+
+        df_ref_thiago = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & 
+                                                        (st.session_state.df_router['Tipo de Servico']=='OUT') & 
+                                                        (st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                        (st.session_state.df_router['Servico']==servico_roteiro)]\
+                                                        .reset_index(drop=True)
+        
+    df_ref_thiago = df_ref_thiago[~df_ref_thiago['Observacao'].str.upper().str.contains('CLD', na=False)]
+
+    dict_tag_servico = \
+
+        {'OUT (PORTO DE GALINHAS)': 'Porto de Galinhas', 
+        'OUT (SERRAMBI)': 'Serrambi', 
+        'OUT (CABO DE STO AGOSTINHO)': 'Cabo de Santo Agostinho', 
+        'OUT (BOA VIAGEM | PIEDADE)': 'Boa Viagem', 
+        'OUT (MARAGOGI | JAPARATINGA)': 'Maragogi', 
+        'OUT (OLINDA)': 'Olinda', 
+        'OUT (FAZENDA NOVA)': 'Fazenda Nova', 
+        'OUT (JOÃO PESSOA-PB)': 'João Pessoa', 
+        'OUT (MILAGRES)': 'Milagres', 
+        'OUT (CARNEIROS I TAMANDARÉ)': 'Carneiros', 
+        'OUT (ALAGOAS)': 'Alagoas', 
+        'OUT (MACEIÓ-AL)': 'Maceió'}
+
+    if len(df_ref_thiago)>0:
+
+        lista_ids_servicos = df_ref_thiago['Id_Servico'].tolist()
+
+        webhook_thiago = "https://conexao.multiatend.com.br/webhook/luckenvioinformativorecife"
+        
+        enviar_informes = st.button(f'Enviar Informativos de Saída - {servico_roteiro} | {data_roteiro.strftime("%d/%m/%Y")}')
+        
+        data_roteiro_str = data_roteiro.strftime('%Y-%m-%d')
+        
+        payload = {"data": data_roteiro_str, 
+                   "ids_servicos": lista_ids_servicos, 
+                   "tag_servico": dict_tag_servico[servico_roteiro]}
+        
+        if enviar_informes:
+            response = requests.post(webhook_thiago, json=payload)
+            
+            if response.status_code == 200:
+                
+                    st.success(f"Informativos Enviados com Sucesso!")
+                
+            else:
+                
+                st.error(f"Erro. Favor contactar o suporte")
+
+                st.error(f"{response}")
