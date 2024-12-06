@@ -3629,7 +3629,7 @@ with row2[0]:
 
     df_router_data_roteiro = st.session_state.df_router[(st.session_state.df_router['Data Execucao']==data_roteiro) & (st.session_state.df_router['Tipo de Servico']=='OUT') & (st.session_state.df_router['Status do Servico']!='CANCELADO')].reset_index(drop=True)
 
-    lista_servicos = df_router_data_roteiro[df_router_data_roteiro['Servico']!='OUT - Camurupim']['Servico'].unique().tolist()
+    lista_servicos = df_router_data_roteiro[df_router_data_roteiro['Servico']!='OUT (SERRAMBI)']['Servico'].unique().tolist()
 
     lista_voos_data_roteiro = df_router_data_roteiro['Voo'].unique().tolist()
 
