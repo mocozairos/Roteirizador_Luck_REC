@@ -3314,7 +3314,8 @@ def puxar_dados_phoenix():
 
     st.session_state.df_router = gerar_df_phoenix('vw_router', 'test_phoenix_recife')
 
-    st.session_state.df_router = st.session_state.df_router[(st.session_state.df_router['Status da Reserva']!='CANCELADO')].reset_index(drop=True)
+    st.session_state.df_router = st.session_state.df_router[(st.session_state.df_router['Status do Servico']!='CANCELADO') & 
+                                                            (~st.session_state.df_router['Status da Reserva'].isin(['CANCELADO', 'RASCUNHO', 'PENDENCIA DE IMPORTAÇÃO']))].reset_index(drop=True)
 
     st.session_state.df_router['Data Horario Apresentacao Original'] = st.session_state.df_router['Data Horario Apresentacao']
 
